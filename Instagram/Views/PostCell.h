@@ -12,6 +12,7 @@
 @interface PostCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *postImage;
 @property (weak, nonatomic) IBOutlet UILabel *postCaption;
+@property (weak, nonatomic) IBOutlet UILabel *postLocation;
 @property (weak, nonatomic) Post *post;
 
 @end

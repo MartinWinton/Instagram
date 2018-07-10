@@ -13,6 +13,7 @@
 @interface ComposeViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *captionField;
 @property (weak, nonatomic) IBOutlet UIImageView *composeImage;
+@property (weak, nonatomic) IBOutlet UITextField *composeLocation;
 
 @end
 
@@ -23,8 +24,8 @@
 }
 - (IBAction)didClickShare:(id)sender {
     
-    [Post postUserImage:self.postedImage withCaption:self.captionField.text withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
-        
+    [Post postUserImage:self.postedImage withCaption:self.captionField.text WithLocation:self.composeLocation.text withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+    
         if(succeeded){
             
             NSLog(@"Successfully posted picture with the follwoing caption: %@", self.captionField.text);

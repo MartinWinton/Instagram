@@ -15,6 +15,7 @@ PODS:
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
   - Bolts/Tasks (1.9.0)
+  - DateTools (2.0.0)
   - Parse (1.17.1):
     - Parse/Core (= 1.17.1)
   - Parse/Core (1.17.1):
@@ -22,19 +23,22 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking
+  - DateTools
   - Parse
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
     - Bolts
+    - DateTools
     - Parse
 
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
+  DateTools: 933ac9c490f21f92127cf690ccd8c397e0126caf
   Parse: d3edaf8c7c722cb33cb83ba7821d015ae32d362d
 
-PODFILE CHECKSUM: 5819bd23e28d6b9d1898f5d7da60030966a95973
+PODFILE CHECKSUM: f420a379019f03a513ba37f90d3c5d25dd4ee917
 
 COCOAPODS: 1.5.3

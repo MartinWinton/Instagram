@@ -10,7 +10,7 @@
 #import "Parse.h"
 #import "ComposeViewController.h"
 #import "PostCell.h"
-
+#import "DetailViewController.h"
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ComposeViewControllerDelegate>
 @property (nonatomic, strong) UIImage *selectedComposeImage;
 @property (weak, nonatomic) IBOutlet UITableView *feedView;
@@ -75,10 +75,10 @@
     
 }
 - (IBAction)didLogout:(id)sender {
-    
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+
     
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
-        [self dismissViewControllerAnimated:YES completion:nil];
 
         // PFUser.current() will now be nil
     }];
@@ -181,9 +181,25 @@
         
         ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
         composeController.postedImage = self.selectedComposeImage;
+        composeController.delegate = self;
         // becase we are composing from timeline we are not replying to a tweet
         NSLog(@"Compose Picture Segue");
     }
+    
+    
+    
+    else if([ navigationController.topViewController isKindOfClass:[DetailViewController class]]){
+        
+        UITableViewCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.feedView indexPathForCell:tappedCell];
+        Post *post = self.posts[indexPath.row];
+        
+        DetailViewController *composeController = (DetailViewController*)navigationController.topViewController;
+        composeController.post = post;
+        // becase we are composing from timeline we are not replying to a tweet
+        NSLog(@"Detail Picture Segue");
+    }
+    
     
 }
 
@@ -219,6 +235,7 @@
     
     
     [self getFeed];
+    
     [self.feedView reloadData];
 
     

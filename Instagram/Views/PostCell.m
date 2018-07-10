@@ -28,10 +28,14 @@
 
     NSURL *imageURL = [NSURL URLWithString:post.image.url];
     self.postImage.image = nil;
-
+    
+ 
     
     [self.postImage setImageWithURL:imageURL];
     self.postCaption.text = post.caption;
+    
+    self.postLocation.text = post.location;
 }
+
 
 @end
