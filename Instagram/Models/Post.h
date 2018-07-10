@@ -20,6 +20,8 @@
 
 @property (nonatomic, strong) PFFile * _Nonnull image;
 @property (nonatomic, strong) NSNumber * _Nonnull likeCount;
+@property (nonatomic, strong) NSMutableArray * _Nonnull likeUsernames;
+
 @property (nonatomic, strong) NSNumber * _Nonnull commentCount;
 
 

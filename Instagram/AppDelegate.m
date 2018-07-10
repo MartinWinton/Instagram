@@ -29,7 +29,7 @@
         NSLog(@"Welcome back %@ 😀", user.username);
         
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UIViewController *instaNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"InstagramNavigationFeed"];
+        UIViewController *instaNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"InstagramTabFeed"];
         self.window.rootViewController = instaNavigationController;
     }
     

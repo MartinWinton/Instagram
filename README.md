@@ -20,7 +20,7 @@ The following **required** functionality is completed:
 The following **optional** features are implemented:
 
 - [x] Run your app on your phone and use the camera to take the photo
-- [ ] Style the login page to look like the real Instagram login page.
+- [x] Style the login page to look like the real Instagram login page.
 - [ ] Style the feed to look like the real Instagram feed.
 - [ ] User can use a tab bar to switch between all "Instagram" posts and posts published only by the user. AKA, tabs for Home Feed and Profile
 - [ ] User can load more posts once he or she reaches the bottom of the feed using infinite scrolling.
@@ -31,7 +31,7 @@ The following **optional** features are implemented:
 - [ ] Display the profile photo with each post
 - [ ] Tapping on a post's username or profile photo goes to that user's profile page
 - [ ] User can comment on a post and see all comments for each post in the post details screen.
-- [ ] User can like a post and see number of likes for each post in the post details screen.
+- [x] User can like a post and see number of likes for each post in the post details screen.
 - [ ] Implement a custom camera view.
 
 The following **additional** features are implemented:

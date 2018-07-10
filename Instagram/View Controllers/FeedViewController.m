@@ -11,15 +11,20 @@
 #import "ComposeViewController.h"
 #import "PostCell.h"
 #import "DetailViewController.h"
-@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ComposeViewControllerDelegate>
+#import "HeaderCell.h"
+@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ComposeViewControllerDelegate,PostCellDelegate>
 @property (nonatomic, strong) UIImage *selectedComposeImage;
 @property (weak, nonatomic) IBOutlet UITableView *feedView;
 @property (nonatomic,strong) NSMutableArray *posts;
 
 
+
 @end
 
 @implementation FeedViewController
+
+NSString *CellIdentifier = @"TableViewCell";
+NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 - (IBAction)didClickCompose:(id)sender {
     
     
@@ -89,6 +94,7 @@
 - (void)viewDidLoad {
     self.feedView.delegate = self;
     self.feedView.dataSource = self;
+    self.feedView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:UIControlEventValueChanged];
@@ -98,10 +104,12 @@
     
     [self getFeed];
     
-    
-    
-    // Do any additional setup after loading the view.
+   // [self.feedView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
+    //[self.feedView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:HeaderViewIdentifier];
 }
+
+    
+    
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -134,36 +142,59 @@
     
 }
 
+
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    
-    
+    if([self.posts[indexPath.row] isKindOfClass:[Post class]]){
+
         Post *post  = self.posts[indexPath.row];
-    
-    
+        
+        
         
         PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"postcell"];
         
+        cell.delegate = self;
+        
+        cell.helper = [[LikeCommentHelper alloc] initWithPost:post];
+        
         cell.post = post;
         return cell;
+    }
+    
+    else {
+        
+        PFUser *user  = self.posts[indexPath.row];
+        
+        
+        
+        HeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"headercell"];
+        
+        cell.user = user;
+        return cell;
+    }
+    
+    
         
         
 
     
 }
-
-
--(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    return 400;
+/*
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 600;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    return 400;
 
-
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
+{
+    return 600;
 }
+
+
+*/
 
 
 #pragma mark - Navigation
@@ -207,13 +238,24 @@
     
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
+    [query includeKey:@"author"];
 
     query.limit = 20;
     
     // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
         if (posts != nil) {
-            self.posts = [NSMutableArray arrayWithArray:posts];
+            NSMutableArray *postsAndNames = [NSMutableArray array];
+            for(int i = 0; i < posts.count; i++){
+                
+                Post *post = posts[i];
+                [postsAndNames addObject:post.author];
+
+                [postsAndNames addObject:post];
+                
+                
+            }
+            self.posts = postsAndNames;
             [self.feedView reloadData];
         } else {
             NSLog(@" Error man%@", error.localizedDescription);
@@ -241,6 +283,11 @@
     
     
 }
-
+- (void)didLoad{
+    
+    
+    
+    [self.feedView reloadData];
+}
 
 @end
