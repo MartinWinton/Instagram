@@ -7,11 +7,18 @@
 //
 
 #import "HeaderCell.h"
+#import "UIImageView+AFNetworking.h"
+
 
 @implementation HeaderCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    
+    self.profilePicView.layer.cornerRadius = self.profilePicView.frame.size.width / 2;
+    self.profilePicView.clipsToBounds = YES;
+
+
     // Initialization code
 }
 
@@ -26,6 +33,16 @@
     _user = user;
     
     self.usernameLabel.text = user.username;
+    
+    PFFile *image = self.user[@"profileImage"];
+    
+    
+    NSURL *imageURL = [NSURL URLWithString:image.url];
+    
+    [self.profilePicView setImageWithURL:imageURL];
+
+    
+    
     
    
     

@@ -14,6 +14,7 @@
 #import "HeaderCell.h"
 #import "InfiniteScrollActivityView.h"
 #import "GridViewController.h"
+#import "LoginViewController.h"
 @interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIScrollViewDelegate, ComposeViewControllerDelegate,PostCellDelegate,GridViewControllerDelegate>
 @property (nonatomic, strong) UIImage *selectedComposeImage;
 @property (weak, nonatomic) IBOutlet UITableView *feedView;
@@ -93,7 +94,7 @@ InfiniteScrollActivityView* loadingMoreView;
     
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
         
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+        [self.navigationController.tabBarController performSegueWithIdentifier:@"logout" sender:self];
 
 
         // PFUser.current() will now be nil
@@ -238,6 +239,14 @@ InfiniteScrollActivityView* loadingMoreView;
     // Pass the selected object to the new view controller.
     
     
+    if([[segue destinationViewController] isKindOfClass:[LoginViewController class]]){
+        
+        NSLog(@"logging out");
+        
+        }
+    
+    else{
+    
     UINavigationController *navigationController = [segue destinationViewController];
     
     
@@ -287,7 +296,7 @@ InfiniteScrollActivityView* loadingMoreView;
     
     
     
-    
+    }
 }
 
 -(void) getFeed{

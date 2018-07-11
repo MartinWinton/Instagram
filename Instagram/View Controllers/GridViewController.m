@@ -20,6 +20,12 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *profileGridView;
 @property (nonatomic,strong) NSArray *posts;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backButton;
+@property (weak, nonatomic) IBOutlet UILabel *numPostsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numFollowersLabel;
+@property (weak, nonatomic) IBOutlet UILabel *numFollowingLabel;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 
 
 @end
@@ -48,7 +54,8 @@
     UIImage *editedImage = info[UIImagePickerControllerEditedImage];
     
     self.user[@"profileImage"] = [Post getPFFileFromImage:editedImage];
-    [SVProgressHUD showWithStatus:@"UpdatingProfile "];
+    // save selected image to profile
+    [SVProgressHUD showWithStatus:@"Updating Profile "];
 
     [SVProgressHUD show];
     [self.user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
@@ -56,9 +63,11 @@
             
             self.profileImageView.image = editedImage;
             [self.delegate didChangeProfile];
+            // if success, change profile locally and tell feed view to update all posts with profile
             
             [SVProgressHUD dismiss];
             [[PFUser currentUser] fetchInBackground];
+            // get updated user so that local user matches database user
 
             
         }
@@ -75,14 +84,48 @@
 }
 
 - (IBAction)didClickBack:(id)sender {
+    
+    if(self.didTap){
   
         [self dismissViewControllerAnimated:true completion:nil];
+        
+    }
         
     
 }
 
 - (void)viewDidLoad {
     
+    if(self.user[@"numPosts"] == nil){
+        
+        
+        self.user[@"numPosts"] = [NSNumber numberWithInt:1];
+        self.user[@"numFollowers"] = [NSNumber numberWithInt:1];
+        self.user[@"numFollowing"] = [NSNumber numberWithInt:1];
+        
+        self.numPostsLabel.text = @"0";
+        self.numFollowersLabel.text = @"0";
+        self.numFollowingLabel.text = @"0";
+        
+        [self.user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if(error == nil){
+                
+                NSLog(@"success!");
+            }
+        }];
+
+    }
+    
+   
+    
+  
+
+    self.usernameLabel.text = self.user.username;
+
+    
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
+    self.profileImageView.clipsToBounds = YES;
+
     
     [super viewDidLoad];
     
@@ -90,9 +133,17 @@
     if(self.didTap){
         
         
+        self.backButton.tintColor = [UIColor blueColor];
+        self.backButton.enabled = YES;
+        
+        
     }
     
     else{
+        
+        self.backButton.tintColor = [UIColor clearColor];
+        self.backButton.enabled = NO;
+        
         [[PFUser currentUser] fetch];
         
         self.user = [PFUser currentUser];
@@ -106,6 +157,7 @@
     
     
     if(self.user[@"profileImage"] != nil){
+        
         
         PFFile *image = self.user[@"profileImage"];
         
@@ -143,6 +195,7 @@
     
     feed.delegate = self;
     
+    // set up feed delegate  to make sure posts are updated 
     
     
     [self getFeed];
@@ -231,6 +284,8 @@
 }
 
 - (void)didChangeProfile{
+    
+    // this method will be run when you update your profile through one of your posts. The order of execution is profile update -> feed view runs delegation method -> delegation method runs this method
     
     [self.user fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if(error == nil){
