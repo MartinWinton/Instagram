@@ -28,10 +28,13 @@
 -(void)toggleFavorite{
     
     
-    if([self.post.likeUsernames containsObject: self.post.author.username]){
+    
+    if([LikeCommentHelper containsUser:self.post]){
         
         
-        [self unfavorite:self.post.author.username];
+        
+        
+        [self unfavorite:self.post.authorUsername];
         
         [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             if(succeeded){
@@ -56,7 +59,9 @@
     
     else{
         
-        [self favorite:self.post.author.username];
+        [self favorite:self.post.authorUsername];
+        
+        
         
         [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             if(succeeded){
@@ -81,14 +86,34 @@
 
 -(void) unfavorite:(NSString *)username{
     
-    [self.post.likeUsernames removeObject:username];
+    NSMutableArray *tempNames = [NSMutableArray arrayWithArray:self.post.likeUsernames];
+    
+    NSMutableArray *discardedItems = [NSMutableArray array];
+    
+    for (PFUser *user in tempNames) {
+        if ([user.objectId isEqualToString:[PFUser currentUser].objectId]){
+            [discardedItems addObject:user];
+            
+        }
+    }
+    
+    [tempNames removeObjectsInArray:discardedItems];
+    
+    self.post.likeUsernames = tempNames;
+    
+    
     self.post.likeCount = [NSNumber numberWithFloat:([self.post.likeCount floatValue] - 1)];
 
 }
 
 -(void) favorite:(NSString *)username{
     
-    [self.post.likeUsernames addObject:username];
+    NSMutableArray *tempNames = [NSMutableArray arrayWithArray:self.post.likeUsernames];
+    
+    [tempNames addObject:[PFUser currentUser]];
+    self.post.likeUsernames = tempNames;
+    
+    
     self.post.likeCount = [NSNumber numberWithFloat:([self.post.likeCount floatValue]  + 1)];
     
 
@@ -96,6 +121,23 @@
     
 }
 
++ (BOOL)containsUser: (Post *)post{
+    
+    for(int i = 0; i < post.likeUsernames.count; i ++){
+        
+        PFUser *user = post.likeUsernames[i];
+        
+        PFUser *current = [PFUser currentUser];
+        
+        if([user.objectId isEqualToString:current.objectId]){
+            return YES;
+        }
+        
+    }
+    
+    return NO;
+    
+}
 
 
 @end

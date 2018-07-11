@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "Post.h"
 #import "Parse.h"
+#import "LikeCommentHelper.h"
 
 @interface DetailViewController : UIViewController
 
 @property (weak, nonatomic) Post *post;
+@property (nonatomic,strong)  LikeCommentHelper *helper;
+
 
 @end

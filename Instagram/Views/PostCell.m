@@ -9,6 +9,7 @@
 #import "PostCell.h"
 #import "Parse.h"
 #import "UIImageView+AFNetworking.h"
+#import "DateTools.h"
 
 
 
@@ -38,7 +39,6 @@
     NSURL *imageURL = [NSURL URLWithString:post.image.url];
     self.postImage.image = nil;
     
-    [self reloadData];
     
  
     
@@ -80,14 +80,18 @@
                                    }];
     
     
-    
+    [self reloadData];
+
 }
     
-    
+
+
 
     -(void)reloadData{
         
-        if([self.post.likeUsernames containsObject: self.post.author.username]){
+        if([LikeCommentHelper containsUser:self.post]){
+            
+            
             
             [self.likeButton setSelected:YES];
             
@@ -99,10 +103,10 @@
             
         }
         
-        
+        self.postTime.text = self.post.createdAt.timeAgoSinceNow;
+
         self.postCaption.text = self.post.caption;
         
-        self.postLocation.text = self.post.location;
         
         self.numLikesLabel.text = [self.post.likeCount stringValue];
         

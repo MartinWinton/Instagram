@@ -12,10 +12,17 @@
 #import "PostCell.h"
 #import "DetailViewController.h"
 #import "HeaderCell.h"
-@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ComposeViewControllerDelegate,PostCellDelegate>
+#import "InfiniteScrollActivityView.h"
+#import "GridViewController.h"
+@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIScrollViewDelegate, ComposeViewControllerDelegate,PostCellDelegate,GridViewControllerDelegate>
 @property (nonatomic, strong) UIImage *selectedComposeImage;
 @property (weak, nonatomic) IBOutlet UITableView *feedView;
 @property (nonatomic,strong) NSMutableArray *posts;
+@property (assign, nonatomic) BOOL isMoreDataLoading;
+@property (assign, nonatomic) Post *lastPost;
+
+
+
 
 
 
@@ -23,8 +30,10 @@
 
 @implementation FeedViewController
 
-NSString *CellIdentifier = @"TableViewCell";
-NSString *HeaderViewIdentifier = @"TableViewHeaderView";
+
+
+InfiniteScrollActivityView* loadingMoreView;
+
 - (IBAction)didClickCompose:(id)sender {
     
     
@@ -80,10 +89,12 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     
 }
 - (IBAction)didLogout:(id)sender {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 
     
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+        
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+
 
         // PFUser.current() will now be nil
     }];
@@ -106,6 +117,17 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
     
    // [self.feedView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     //[self.feedView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:HeaderViewIdentifier];
+    
+    
+    // Set up Infinite Scroll loading indicator
+    CGRect frame = CGRectMake(0, self.feedView.contentSize.height, self.feedView.bounds.size.width, InfiniteScrollActivityView.defaultHeight);
+    loadingMoreView = [[InfiniteScrollActivityView alloc] initWithFrame:frame];
+    loadingMoreView.hidden = true;
+    [self.feedView addSubview:loadingMoreView];
+    
+    UIEdgeInsets insets = self.feedView.contentInset;
+    insets.bottom += InfiniteScrollActivityView.defaultHeight;
+    self.feedView.contentInset = insets;
 }
 
     
@@ -172,6 +194,8 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
         HeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"headercell"];
         
         cell.user = user;
+        Post *post  = self.posts[indexPath.row+1];
+        cell.locationLabel.text = post.location;
         return cell;
     }
     
@@ -225,11 +249,34 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
         NSIndexPath *indexPath = [self.feedView indexPathForCell:tappedCell];
         Post *post = self.posts[indexPath.row];
         
-        DetailViewController *composeController = (DetailViewController*)navigationController.topViewController;
-        composeController.post = post;
+        
+        DetailViewController *detailController = (DetailViewController*)navigationController.topViewController;
+        detailController.post = post;
+        
+        detailController.helper = [[LikeCommentHelper alloc] initWithPost:post];
+
         // becase we are composing from timeline we are not replying to a tweet
         NSLog(@"Detail Picture Segue");
     }
+    
+    else {
+           GridViewController *gridController = (GridViewController*)navigationController.topViewController;
+        
+
+        UITableViewCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.feedView indexPathForCell:tappedCell];
+        PFUser *user = self.posts[indexPath.row];
+
+        gridController.user = user;
+        gridController.didTap = true;
+        gridController.delegate = self;
+       
+        
+        // becase we are composing from timeline we are not replying to a tweet
+        NSLog(@"Detail Picture Segue");
+    }
+    
+    
     
     
 }
@@ -262,6 +309,73 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
         }
     }];
 }
+- (void)getMoreData {
+    
+    
+    // Get timeline
+    
+    self.lastPost   = [self.posts objectAtIndex:self.posts.count-1];
+    // get most oldest tweet, i.e. end of timeline
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Post"];
+    [query orderByDescending:@"createdAt"];
+    [query whereKey:@"createdAt" greaterThan:self.lastPost.createdAt];
+    [query includeKey:@"author"];
+    
+    query.limit = 3;
+    
+    // fetch data asynchronously
+    [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
+        if (posts) {
+            
+            
+            self.isMoreDataLoading = NO;
+            // to prevent calling function more than once
+            
+            [loadingMoreView stopAnimating];
+
+            
+            NSArray *newPosts =[self.posts arrayByAddingObjectsFromArray:posts];
+            
+            self.posts = [NSMutableArray arrayWithArray:newPosts];
+            
+            [self.feedView reloadData];
+            
+            
+            
+            
+            
+    
+            
+            
+        } else {
+            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+        }
+    }];
+    
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if(!self.isMoreDataLoading){
+        // Calculate the position of one screen length before the bottom of the results
+        int scrollViewContentHeight = self.feedView.contentSize.height;
+        int scrollOffsetThreshold = scrollViewContentHeight - self.feedView.bounds.size.height;
+        
+        // When the user has scrolled past the threshold, start requesting
+        if(scrollView.contentOffset.y > scrollOffsetThreshold && self.feedView.isDragging) {
+            self.isMoreDataLoading = true;
+            
+            // Update position of loadingMoreView, and start loading indicator
+            CGRect frame = CGRectMake(0, self.feedView.contentSize.height, self.feedView.bounds.size.width, InfiniteScrollActivityView.defaultHeight);
+            loadingMoreView.frame = frame;
+            [loadingMoreView startAnimating];
+            
+            
+            [self getMoreData];
+            
+            // ... Code to load more results ...
+        }
+    }
+}
 
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
     
@@ -285,9 +399,17 @@ NSString *HeaderViewIdentifier = @"TableViewHeaderView";
 }
 - (void)didLoad{
     
+    [self.feedView reloadData];
+}
+
+- (void)didChangeProfile{
     
+    [self getFeed];
     
     [self.feedView reloadData];
+
+    
+    
 }
 
 @end

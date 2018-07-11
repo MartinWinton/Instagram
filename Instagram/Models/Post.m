@@ -41,8 +41,9 @@
     Post *newPost = [Post new];
     newPost.image = [self getPFFileFromImage:image];
     newPost.author= [PFUser currentUser];
+    newPost.authorUsername = [PFUser currentUser].username;
     
-    newPost.likeUsernames = [NSMutableArray array];
+    newPost.likeUsernames = [NSArray array];
     newPost.caption = caption;
     newPost.location = location;
     newPost.likeCount = @(0);

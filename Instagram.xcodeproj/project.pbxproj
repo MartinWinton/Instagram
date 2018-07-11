@@ -22,6 +22,9 @@
 		06CB4F2A20F4843D00D909F0 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CB4F2920F4843D00D909F0 /* DetailViewController.m */; };
 		06CB4F3020F52FAF00D909F0 /* HeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CB4F2F20F52FAF00D909F0 /* HeaderCell.m */; };
 		06CB4F3420F5360A00D909F0 /* LikeCommentHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CB4F3320F5360A00D909F0 /* LikeCommentHelper.m */; };
+		06CB4F3A20F565B200D909F0 /* GridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CB4F3920F565B200D909F0 /* GridViewController.m */; };
+		06CB4F3D20F566A200D909F0 /* PostCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CB4F3C20F566A200D909F0 /* PostCollectionCell.m */; };
+		06CB4F4020F5B3EE00D909F0 /* InfiniteScrollActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CB4F3F20F5B3EE00D909F0 /* InfiniteScrollActivityView.m */; };
 		69C01D6C099DA867D530B863 /* libPods-Instagram.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34F6EB8F1569B7F1AC1B757B /* libPods-Instagram.a */; };
 		6E8B1550887DF927A81CA323 /* libPods-InstagramTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A34BADAEB9F1D3402DD16390 /* libPods-InstagramTests.a */; };
 		C8AAA4ED2FE625CAED879262 /* libPods-InstagramUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C24265274B67924E35889EA7 /* libPods-InstagramUITests.a */; };
@@ -75,6 +78,12 @@
 		06CB4F2F20F52FAF00D909F0 /* HeaderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HeaderCell.m; sourceTree = "<group>"; };
 		06CB4F3220F5360A00D909F0 /* LikeCommentHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LikeCommentHelper.h; sourceTree = "<group>"; };
 		06CB4F3320F5360A00D909F0 /* LikeCommentHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LikeCommentHelper.m; sourceTree = "<group>"; };
+		06CB4F3820F565B200D909F0 /* GridViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GridViewController.h; sourceTree = "<group>"; };
+		06CB4F3920F565B200D909F0 /* GridViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GridViewController.m; sourceTree = "<group>"; };
+		06CB4F3B20F566A200D909F0 /* PostCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PostCollectionCell.h; sourceTree = "<group>"; };
+		06CB4F3C20F566A200D909F0 /* PostCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostCollectionCell.m; sourceTree = "<group>"; };
+		06CB4F3E20F5B3EE00D909F0 /* InfiniteScrollActivityView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfiniteScrollActivityView.h; sourceTree = "<group>"; };
+		06CB4F3F20F5B3EE00D909F0 /* InfiniteScrollActivityView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfiniteScrollActivityView.m; sourceTree = "<group>"; };
 		1D213F6CE37C64F23AE02AA1 /* Pods-InstagramTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstagramTests/Pods-InstagramTests.debug.xcconfig"; sourceTree = "<group>"; };
 		34F6EB8F1569B7F1AC1B757B /* libPods-Instagram.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Instagram.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A3A3BC6154A8AA91D6AFAD2 /* Pods-InstagramUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstagramUITests/Pods-InstagramUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -183,6 +192,8 @@
 				06CB4F1F20F40EBC00D909F0 /* ComposeViewController.m */,
 				06CB4F2820F4843D00D909F0 /* DetailViewController.h */,
 				06CB4F2920F4843D00D909F0 /* DetailViewController.m */,
+				06CB4F3820F565B200D909F0 /* GridViewController.h */,
+				06CB4F3920F565B200D909F0 /* GridViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -203,6 +214,10 @@
 				06CB4F2320F423E700D909F0 /* PostCell.m */,
 				06CB4F2E20F52FAF00D909F0 /* HeaderCell.h */,
 				06CB4F2F20F52FAF00D909F0 /* HeaderCell.m */,
+				06CB4F3B20F566A200D909F0 /* PostCollectionCell.h */,
+				06CB4F3C20F566A200D909F0 /* PostCollectionCell.m */,
+				06CB4F3E20F5B3EE00D909F0 /* InfiniteScrollActivityView.h */,
+				06CB4F3F20F5B3EE00D909F0 /* InfiniteScrollActivityView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -414,11 +429,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Instagram/Pods-Instagram-resources.sh",
 				"${PODS_ROOT}/DateTools/DateTools/DateTools/DateTools.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/Parse/Parse.bundle",
+				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DateTools.bundle",
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Parse.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -450,6 +467,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06CB4F4020F5B3EE00D909F0 /* InfiniteScrollActivityView.m in Sources */,
 				06CB4F1620F400E700D909F0 /* LoginViewController.m in Sources */,
 				06CB4F1D20F40C4C00D909F0 /* FeedViewController.m in Sources */,
 				06CB4EEC20F3F67600D909F0 /* main.m in Sources */,
@@ -459,6 +477,8 @@
 				06CB4F2420F423E700D909F0 /* PostCell.m in Sources */,
 				06CB4EDE20F3F67500D909F0 /* AppDelegate.m in Sources */,
 				06CB4F3420F5360A00D909F0 /* LikeCommentHelper.m in Sources */,
+				06CB4F3D20F566A200D909F0 /* PostCollectionCell.m in Sources */,
+				06CB4F3A20F565B200D909F0 /* GridViewController.m in Sources */,
 				06CB4F1A20F4035200D909F0 /* Post.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

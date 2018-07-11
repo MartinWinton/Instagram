@@ -9,6 +9,7 @@
 #import "ComposeViewController.h"
 #import "Post.h"
 #import "Parse.h"
+#import "SVProgressHUD.h"
 
 @interface ComposeViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *captionField;
@@ -24,21 +25,28 @@
 }
 - (IBAction)didClickShare:(id)sender {
     
-    [Post postUserImage:self.postedImage withCaption:self.captionField.text WithLocation:self.composeLocation.text withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
-    
-        if(succeeded){
+    [SVProgressHUD show];
+    [SVProgressHUD setBorderColor: [UIColor blueColor]];
+    [SVProgressHUD showWithStatus:@"Posting to the gram.."];
+        [Post postUserImage:self.postedImage withCaption:self.captionField.text WithLocation:self.composeLocation.text withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
             
-            NSLog(@"Successfully posted picture with the follwoing caption: %@", self.captionField.text);
-            [self dismissViewControllerAnimated:YES completion:nil];
-            [self.delegate didShare];
+            if(succeeded){
+                
+                NSLog(@"Successfully posted picture with the follwoing caption: %@", self.captionField.text);
+                [self dismissViewControllerAnimated:YES completion:nil];
+                [self.delegate didShare];
+                [SVProgressHUD dismiss];
 
-        }
-        
-        else{
-            NSLog(@"Error posting post: %@", error.localizedDescription);
-        }
-        
-    }];
+                
+            }
+            
+            else{
+                NSLog(@"Error posting post: %@", error.localizedDescription);
+            }
+            
+        }];
+
+    
 }
 
 - (void)viewDidLoad {

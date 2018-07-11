@@ -12,6 +12,7 @@
 @interface HeaderCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) PFUser *user;
+@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 
 
 @end

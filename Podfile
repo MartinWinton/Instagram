@@ -9,6 +9,7 @@ target 'Instagram' do
   pod 'Parse'
   pod 'AFNetworking'
   pod 'DateTools'
+  pod 'SVProgressHUD'
 
 
   target 'InstagramTests' do

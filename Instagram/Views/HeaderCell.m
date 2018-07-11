@@ -24,9 +24,10 @@
 -(void)setUser:(PFUser *)user{
     
     _user = user;
-    NSArray *keys = user.allKeys;
     
     self.usernameLabel.text = user.username;
+    
+   
     
     
 }
