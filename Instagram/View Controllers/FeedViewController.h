@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ProfileUpdateDelegate
+
+- (void)didChangeProfile;
+
+@end
+
 @interface FeedViewController : UIViewController
+@property (nonatomic, weak) id<ProfileUpdateDelegate> delegate;
+
+
+
 
 @end

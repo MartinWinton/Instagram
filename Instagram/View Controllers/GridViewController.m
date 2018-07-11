@@ -16,7 +16,7 @@
 #import "FeedViewController.h"
 
 
-@interface GridViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface GridViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ProfileUpdateDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *profileGridView;
 @property (nonatomic,strong) NSArray *posts;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
@@ -82,6 +82,8 @@
 }
 
 - (void)viewDidLoad {
+    
+    
     [super viewDidLoad];
     
     
@@ -91,16 +93,11 @@
     }
     
     else{
+        [[PFUser currentUser] fetch];
         
         self.user = [PFUser currentUser];
         
-        UINavigationController *navfeed = self.tabBarController.viewControllers[0];
-        
-        FeedViewController *feed = (FeedViewController*)navfeed.topViewController;
-        
-        
-        
-        self.delegate = feed;
+      
         
         
         
@@ -138,6 +135,15 @@
     layout.itemSize = CGSizeMake(itemWidth, itemWidth);
 
     // Do any additional setup after loading the view.
+    
+    
+    UINavigationController *navfeed = self.tabBarController.viewControllers[0];
+    
+    FeedViewController *feed = (FeedViewController*)navfeed.topViewController;
+    
+    feed.delegate = self;
+    
+    
     
     [self getFeed];
     
@@ -222,6 +228,22 @@
         NSLog(@"Detail Picture Segue");
     }
     
+}
+
+- (void)didChangeProfile{
+    
+    [self.user fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        if(error == nil){
+            
+            PFFile *image = self.user[@"profileImage"];
+            
+            
+            NSURL *imageURL = [NSURL URLWithString:image.url];
+            
+            [self.profileImageView setImageWithURL:imageURL];
+            
+        }
+    }];
 }
 
 

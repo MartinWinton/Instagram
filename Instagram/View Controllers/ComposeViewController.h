@@ -13,8 +13,8 @@
 @protocol ComposeViewControllerDelegate
 
 - (void)didShare;
-
 @end
+
 
 @interface ComposeViewController : UIViewController
 
@@ -22,6 +22,7 @@
 
 @property (nonatomic, strong) UIImage *  postedImage;
 @property (nonatomic, weak) id<ComposeViewControllerDelegate> delegate;
+
 
 
 

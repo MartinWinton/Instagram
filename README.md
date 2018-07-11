@@ -38,7 +38,7 @@ The following **additional** features are implemented:
 
 - [x] When sucessfully posting an image, the feed updates to show the new image
 - [x] Users can also unlike posts
-- [x] When updating a profile pic after clicking on a user's own post, the profile pic on the user tab is also updated
+- [x] When updating a profile pic after clicking on a user's own post, the profile pic on the user tab is also updated and vice versa
 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):

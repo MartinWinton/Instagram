@@ -107,6 +107,15 @@ InfiniteScrollActivityView* loadingMoreView;
     self.feedView.dataSource = self;
     self.feedView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    
+    UINavigationController *navfeed = self.tabBarController.viewControllers[1];
+    
+    
+    
+    GridViewController *feed = (GridViewController*)navfeed.topViewController;
+    
+    feed.delegate = self;
+    
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.feedView insertSubview:refreshControl atIndex:0];
@@ -407,6 +416,17 @@ InfiniteScrollActivityView* loadingMoreView;
     [self getFeed];
     
     [self.feedView reloadData];
+    
+    
+    
+    [self.delegate didChangeProfile];
+    
+    
+    
+  
+    
+    
+    
 
     
     
