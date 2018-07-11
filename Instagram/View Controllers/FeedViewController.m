@@ -15,12 +15,15 @@
 #import "InfiniteScrollActivityView.h"
 #import "GridViewController.h"
 #import "LoginViewController.h"
-@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIScrollViewDelegate, ComposeViewControllerDelegate,PostCellDelegate,GridViewControllerDelegate>
+#import "CommentViewController.h"
+@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIScrollViewDelegate, ComposeViewControllerDelegate,PostCellDelegate,GridViewControllerDelegate,PostCellCommentDelegate>
 @property (nonatomic, strong) UIImage *selectedComposeImage;
 @property (weak, nonatomic) IBOutlet UITableView *feedView;
 @property (nonatomic,strong) NSMutableArray *posts;
 @property (assign, nonatomic) BOOL isMoreDataLoading;
 @property (assign, nonatomic) Post *lastPost;
+@property (assign, nonatomic) Post *commentedPost;
+
 
 
 
@@ -188,6 +191,7 @@ InfiniteScrollActivityView* loadingMoreView;
         PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"postcell"];
         
         cell.delegate = self;
+        cell.commentdelegate = self;
         
         cell.helper = [[LikeCommentHelper alloc] initWithPost:post];
         
@@ -276,6 +280,19 @@ InfiniteScrollActivityView* loadingMoreView;
         // becase we are composing from timeline we are not replying to a tweet
         NSLog(@"Detail Picture Segue");
     }
+        
+    else if([ navigationController.topViewController isKindOfClass:[CommentViewController class]]){
+        
+        
+        CommentViewController *commentController = (CommentViewController*)navigationController.topViewController;
+        commentController.post = self.commentedPost;
+        
+        
+        
+        
+     
+    }
+        
     
     else {
            GridViewController *gridController = (GridViewController*)navigationController.topViewController;
@@ -411,6 +428,8 @@ InfiniteScrollActivityView* loadingMoreView;
     [self getFeed];
     
     [self.feedView reloadData];
+    [self.delegate didChangeProfile];
+
 
     
     
@@ -431,14 +450,12 @@ InfiniteScrollActivityView* loadingMoreView;
     [self.delegate didChangeProfile];
     
     
-    
-  
-    
-    
-    
-
-    
-    
 }
+
+- (void)didClickCommentOfPost:(Post *)post {
+    
+    self.commentedPost = post;
+}
+
 
 @end

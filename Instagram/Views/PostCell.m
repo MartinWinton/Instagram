@@ -15,6 +15,10 @@
 
 @implementation PostCell
 
+- (IBAction)didClickComment:(id)sender {
+    
+    [self.commentdelegate didClickCommentOfPost:self.post];
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

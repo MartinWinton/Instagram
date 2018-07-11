@@ -96,38 +96,40 @@
 
 - (void)viewDidLoad {
     
-    if(self.user[@"numPosts"] == nil){
-        
-        
-        self.user[@"numPosts"] = [NSNumber numberWithInt:1];
-        self.user[@"numFollowers"] = [NSNumber numberWithInt:1];
-        self.user[@"numFollowing"] = [NSNumber numberWithInt:1];
-        
-        self.numPostsLabel.text = @"0";
-        self.numFollowersLabel.text = @"0";
-        self.numFollowingLabel.text = @"0";
-        
-        [self.user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-            if(error == nil){
-                
-                NSLog(@"success!");
-            }
-        }];
-
-    }
     
-   
-    
-  
-
-    self.usernameLabel.text = self.user.username;
-
+    [super viewDidLoad];
     
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
     self.profileImageView.clipsToBounds = YES;
 
     
-    [super viewDidLoad];
+    
+    
+    self.profileGridView.dataSource = self;
+    self.profileGridView.delegate = self;
+    
+    UICollectionViewFlowLayout *layout =  (UICollectionViewFlowLayout*) self.profileGridView.collectionViewLayout;
+    
+    layout.minimumLineSpacing = 3;
+    
+    
+    CGFloat postersPerLine = 3;
+    
+    CGFloat itemWidth = (self.profileGridView.frame.size.width/postersPerLine-3);
+    
+    layout.itemSize = CGSizeMake(itemWidth, itemWidth);
+    
+    // Do any additional setup after loading the view.
+    
+    
+    UINavigationController *navfeed = self.tabBarController.viewControllers[0];
+    
+    FeedViewController *feed = (FeedViewController*)navfeed.topViewController;
+    
+    feed.delegate = self;
+    
+    // set up feed delegate  to make sure posts are updated
+    
     
     
     if(self.didTap){
@@ -135,6 +137,7 @@
         
         self.backButton.tintColor = [UIColor blueColor];
         self.backButton.enabled = YES;
+        [self refreshData];
         
         
     }
@@ -144,16 +147,70 @@
         self.backButton.tintColor = [UIColor clearColor];
         self.backButton.enabled = NO;
         
-        [[PFUser currentUser] fetch];
+        [[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            self.user = [PFUser currentUser];
+            [self refreshData];
+
+        }];
         
-        self.user = [PFUser currentUser];
         
-      
+        
         
         
         
         
     }
+   
+    
+
+    
+    
+ 
+}
+
+
+-(void)refreshData{
+    if(self.user[@"numPosts"] == nil){
+        
+        
+        self.user[@"numPosts"] = @"0";
+        self.user[@"numFollowers"] = @"0";
+        self.user[@"numFollowing"] = @"0";
+        
+        self.numPostsLabel.text = @"0";
+        self.numFollowersLabel.text = @"0";
+        self.numFollowingLabel.text = @"0";
+        
+        // initialize users with followers
+        
+        
+        
+        [self.user saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if(error == nil){
+                
+                NSLog(@"success!");
+            }
+        }];
+        
+    }
+    
+    else{
+        
+        self.numPostsLabel.text = self.user[@"numPosts"];
+        self.numFollowersLabel.text =  self.user[@"numFollowers"];
+        self.numFollowingLabel.text =  self.user[@"numFollowing"];
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    self.usernameLabel.text = self.user.username;
+    
+    
     
     
     if(self.user[@"profileImage"] != nil){
@@ -172,37 +229,14 @@
     }
     
     
-    self.profileGridView.dataSource = self;
-    self.profileGridView.delegate = self;
-    
-    UICollectionViewFlowLayout *layout =  (UICollectionViewFlowLayout*) self.profileGridView.collectionViewLayout;
-    
-    layout.minimumLineSpacing = 3;
-    
-    
-    CGFloat postersPerLine = 3;
-    
-    CGFloat itemWidth = (self.profileGridView.frame.size.width/postersPerLine-3);
-    
-    layout.itemSize = CGSizeMake(itemWidth, itemWidth);
-
-    // Do any additional setup after loading the view.
-    
-    
-    UINavigationController *navfeed = self.tabBarController.viewControllers[0];
-    
-    FeedViewController *feed = (FeedViewController*)navfeed.topViewController;
-    
-    feed.delegate = self;
-    
-    // set up feed delegate  to make sure posts are updated 
-    
+  
     
     [self getFeed];
     
     
     
- 
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

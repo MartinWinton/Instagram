@@ -30,7 +30,7 @@ The following **optional** features are implemented:
 - [x] Allow the logged in user to add a profile photo
 - [x] Display the profile photo with each post
 - [x] Tapping on a post's username or profile photo goes to that user's profile page
-- [ ] User can comment on a post and see all comments for each post in the post details screen.
+- [x] User can comment on a post and see all comments for each post in the post details screen.
 - [x] User can like a post and see number of likes for each post in the post details screen.
 - [ ] Implement a custom camera view.
 
@@ -39,7 +39,8 @@ The following **additional** features are implemented:
 - [x] When sucessfully posting an image, the feed updates to show the new image
 - [x] Users can also unlike posts
 - [x] When updating a profile pic after clicking on a user's own post, the profile pic on the user tab is also updated and vice versa
-
+- [x] Posting increases the post counter on the users profile page
+- [x] Comments have profile pics and usernames
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 

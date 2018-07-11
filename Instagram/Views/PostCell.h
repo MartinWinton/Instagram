@@ -15,13 +15,21 @@
 @protocol PostCellDelegate
 
 - (void)didLoad;
+
 @end
+
+@protocol PostCellCommentDelegate
+
+- (void)didClickCommentOfPost:(Post *)post;
+@end
+
 @interface PostCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *postImage;
 @property (weak, nonatomic) IBOutlet UILabel *postCaption;
 @property (weak, nonatomic) IBOutlet UILabel *postTime;
 @property (weak, nonatomic) Post *post;
 @property (nonatomic, weak) id<PostCellDelegate> delegate;
+@property (nonatomic, weak) id<PostCellCommentDelegate> commentdelegate;
 @property BOOL needReload;
 @property (nonatomic,strong)  LikeCommentHelper *helper;
 @property (weak, nonatomic) IBOutlet UILabel *likesLabel;

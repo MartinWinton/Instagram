@@ -48,7 +48,11 @@
     newPost.location = location;
     newPost.likeCount = @(0);
     newPost.commentCount = @(0);
+    newPost.comments = [NSArray array];
     
+    NSNumber *numPosts = [NSNumber numberWithInt:[newPost.author[@"numPosts"] intValue] + 1];
+    
+    newPost.author[@"numPosts"] = [numPosts stringValue];
     
     
     [newPost saveInBackgroundWithBlock: completion];

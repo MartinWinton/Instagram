@@ -25,6 +25,9 @@
 		06CB4F3A20F565B200D909F0 /* GridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CB4F3920F565B200D909F0 /* GridViewController.m */; };
 		06CB4F3D20F566A200D909F0 /* PostCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CB4F3C20F566A200D909F0 /* PostCollectionCell.m */; };
 		06CB4F4020F5B3EE00D909F0 /* InfiniteScrollActivityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CB4F3F20F5B3EE00D909F0 /* InfiniteScrollActivityView.m */; };
+		06CB4F4520F6A4DF00D909F0 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CB4F4420F6A4DF00D909F0 /* Comment.m */; };
+		06CB4F4820F6AE7200D909F0 /* CommentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CB4F4720F6AE7200D909F0 /* CommentViewController.m */; };
+		06CB4F4B20F6B44100D909F0 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CB4F4A20F6B44100D909F0 /* CommentCell.m */; };
 		69C01D6C099DA867D530B863 /* libPods-Instagram.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34F6EB8F1569B7F1AC1B757B /* libPods-Instagram.a */; };
 		6E8B1550887DF927A81CA323 /* libPods-InstagramTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A34BADAEB9F1D3402DD16390 /* libPods-InstagramTests.a */; };
 		C8AAA4ED2FE625CAED879262 /* libPods-InstagramUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C24265274B67924E35889EA7 /* libPods-InstagramUITests.a */; };
@@ -84,6 +87,12 @@
 		06CB4F3C20F566A200D909F0 /* PostCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PostCollectionCell.m; sourceTree = "<group>"; };
 		06CB4F3E20F5B3EE00D909F0 /* InfiniteScrollActivityView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfiniteScrollActivityView.h; sourceTree = "<group>"; };
 		06CB4F3F20F5B3EE00D909F0 /* InfiniteScrollActivityView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfiniteScrollActivityView.m; sourceTree = "<group>"; };
+		06CB4F4320F6A4DF00D909F0 /* Comment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		06CB4F4420F6A4DF00D909F0 /* Comment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		06CB4F4620F6AE7200D909F0 /* CommentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentViewController.h; sourceTree = "<group>"; };
+		06CB4F4720F6AE7200D909F0 /* CommentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentViewController.m; sourceTree = "<group>"; };
+		06CB4F4920F6B44100D909F0 /* CommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
+		06CB4F4A20F6B44100D909F0 /* CommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CommentCell.m; sourceTree = "<group>"; };
 		1D213F6CE37C64F23AE02AA1 /* Pods-InstagramTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstagramTests/Pods-InstagramTests.debug.xcconfig"; sourceTree = "<group>"; };
 		34F6EB8F1569B7F1AC1B757B /* libPods-Instagram.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Instagram.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A3A3BC6154A8AA91D6AFAD2 /* Pods-InstagramUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstagramUITests/Pods-InstagramUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -194,6 +203,8 @@
 				06CB4F2920F4843D00D909F0 /* DetailViewController.m */,
 				06CB4F3820F565B200D909F0 /* GridViewController.h */,
 				06CB4F3920F565B200D909F0 /* GridViewController.m */,
+				06CB4F4620F6AE7200D909F0 /* CommentViewController.h */,
+				06CB4F4720F6AE7200D909F0 /* CommentViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -203,6 +214,8 @@
 			children = (
 				06CB4F1820F4035200D909F0 /* Post.h */,
 				06CB4F1920F4035200D909F0 /* Post.m */,
+				06CB4F4320F6A4DF00D909F0 /* Comment.h */,
+				06CB4F4420F6A4DF00D909F0 /* Comment.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -218,6 +231,8 @@
 				06CB4F3C20F566A200D909F0 /* PostCollectionCell.m */,
 				06CB4F3E20F5B3EE00D909F0 /* InfiniteScrollActivityView.h */,
 				06CB4F3F20F5B3EE00D909F0 /* InfiniteScrollActivityView.m */,
+				06CB4F4920F6B44100D909F0 /* CommentCell.h */,
+				06CB4F4A20F6B44100D909F0 /* CommentCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -474,8 +489,11 @@
 				06CB4F2A20F4843D00D909F0 /* DetailViewController.m in Sources */,
 				06CB4F3020F52FAF00D909F0 /* HeaderCell.m in Sources */,
 				06CB4F2020F40EBC00D909F0 /* ComposeViewController.m in Sources */,
+				06CB4F4520F6A4DF00D909F0 /* Comment.m in Sources */,
 				06CB4F2420F423E700D909F0 /* PostCell.m in Sources */,
+				06CB4F4820F6AE7200D909F0 /* CommentViewController.m in Sources */,
 				06CB4EDE20F3F67500D909F0 /* AppDelegate.m in Sources */,
+				06CB4F4B20F6B44100D909F0 /* CommentCell.m in Sources */,
 				06CB4F3420F5360A00D909F0 /* LikeCommentHelper.m in Sources */,
 				06CB4F3D20F566A200D909F0 /* PostCollectionCell.m in Sources */,
 				06CB4F3A20F565B200D909F0 /* GridViewController.m in Sources */,
