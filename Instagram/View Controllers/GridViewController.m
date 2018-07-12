@@ -14,9 +14,10 @@
 #import "UIImageView+AFNetworking.h"
 #import "SVProgressHUD.h"
 #import "FeedViewController.h"
+#import "ProfileEditViewController.h"
 
 
-@interface GridViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ProfileUpdateDelegate>
+@interface GridViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ProfileUpdateDelegate,ProfileEditViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *profileGridView;
 @property (nonatomic,strong) NSArray *posts;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
@@ -26,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *numFollowingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *editProfileButton;
 
 
 @end
@@ -99,6 +101,13 @@
     
     [super viewDidLoad];
     
+    
+    
+    self.editProfileButton.layer.cornerRadius = 13;
+    self.editProfileButton.clipsToBounds = true;
+    [self.editProfileButton.layer setBorderWidth:1];
+    [self.editProfileButton.layer setBorderColor:[[UIColor lightGrayColor] CGColor]];
+    
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
     self.profileImageView.clipsToBounds = YES;
 
@@ -130,7 +139,7 @@
     
     // set up feed delegate  to make sure posts are updated
     
-    
+    [SVProgressHUD showWithStatus:@"Loading Profile"];
     
     if(self.didTap){
         
@@ -147,23 +156,19 @@
         self.backButton.tintColor = [UIColor clearColor];
         self.backButton.enabled = NO;
         
+        
+        
         [[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
             self.user = [PFUser currentUser];
             [self refreshData];
 
         }];
         
-        
-        
-        
-        
-        
-        
+ 
     }
    
     
-
-    
+ 
     
  
 }
@@ -202,14 +207,18 @@
         
         
         
+        
+        
     }
     
     
     
     
     
-    self.usernameLabel.text = self.user.username;
-    
+    self.usernameLabel.text = self.user[@"Name"];
+    self.descriptionLabel.text = self.user[@"Biography"];
+
+
     
     
     
@@ -228,9 +237,21 @@
         
     }
     
+    if([self.user.objectId isEqualToString:[PFUser currentUser].objectId]){
+        
+        
+        
+        self.editProfileButton.hidden = NO;
+    }
+    else{
+        
+        self.editProfileButton.hidden = YES;
+        
+        
+    }
     
+    self.navigationItem.title = self.user.username;
   
-    
     [self getFeed];
     
     
@@ -267,6 +288,8 @@
     
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
+    [query includeKey:@"author"];
+
     [query whereKey:@"authorUsername" equalTo:self.user.username];
     
 
@@ -281,6 +304,7 @@
             self.posts = posts;
             
             [self.profileGridView reloadData];
+            [SVProgressHUD dismiss];
         } else {
             NSLog(@" Error man%@", error.localizedDescription);
         }
@@ -310,10 +334,25 @@
         DetailViewController *detailController = (DetailViewController*)navigationController.topViewController;
         detailController.post = post;
         
-            detailController.helper = [[LikeCommentHelper alloc] initWithPost:post];
+    
         // becase we are composing from timeline we are not replying to a tweet
         NSLog(@"Detail Picture Segue");
     }
+    
+    if([ navigationController.topViewController isKindOfClass:[ProfileEditViewController class]]){
+        
+      
+        
+        
+        ProfileEditViewController *profileController = (ProfileEditViewController*)navigationController.topViewController;
+        profileController.user = self.user;
+        profileController.delegate = self;
+        
+        
+        // becase we are composing from timeline we are not replying to a tweet
+        NSLog(@"Profile Edit Segue");
+    }
+    
     
 }
 
@@ -333,6 +372,24 @@
             
         }
     }];
+}
+- (void)didChangeProfileText{
+    
+    [self.user fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        if(error == nil){
+            
+            self.usernameLabel.text = self.user[@"Name"];;
+            self.descriptionLabel.text = self.user[@"Biography"];
+            
+            [self.delegate didChangeProfile];
+            
+            
+      
+            
+        }
+    }];
+    
+    
 }
 
 

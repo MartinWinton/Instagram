@@ -33,6 +33,7 @@
         if(succeeded){
             NSLog(@"Success!");
             [self getFeed];
+            [self.delegate didComment];
         }
                   }];
   

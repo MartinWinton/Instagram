@@ -10,39 +10,33 @@
 #import "Post.h"
 #import "UIImageView+AFNetworking.h"
 #import "DateTools.h"
+#import "PostCell.h"
+#import "HeaderCell.h"
+#import "CommentViewController.h"
 
-@interface DetailViewController ()
-@property (weak, nonatomic) IBOutlet UIImageView *detailImage;
-@property (weak, nonatomic) IBOutlet UILabel *detailCaption;
-@property (weak, nonatomic) IBOutlet UILabel *detailLocation;
-@property (weak, nonatomic) IBOutlet UILabel *detailTime;
-@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
-@property (weak, nonatomic) IBOutlet UILabel *numLikes;
-@property (weak, nonatomic) IBOutlet UILabel *likesLabel;
+@interface DetailViewController ()<UITableViewDelegate,UITableViewDataSource,PostCellCommentDelegate,PostCellLikeDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *detailTableView;
+@property (assign, nonatomic) Post *commentedPost;
+
+
+
 
 @end
 
 @implementation DetailViewController
-- (IBAction)didTapFavorite:(id)sender {
-    
-    [self.helper toggleFavorite];
-    [self reloadData];
-}
+
 - (IBAction)didClickBack:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];
 
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
     
-    NSURL *imageURL = [NSURL URLWithString:self.post.image.url];
-    self.detailImage.image = nil;
-    
-    [self.detailImage setImageWithURL:imageURL];
-  
-    
-    [self reloadData];
+    self.detailTableView.dataSource = self;
+    self.detailTableView.delegate = self;
+    self.detailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+ 
   
     // Do any additional setup after loading the view.
 }
@@ -52,55 +46,79 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)reloadData{
-    
-    
-    
-    if([LikeCommentHelper containsUser:self.post]){
 
-        [self.favoriteButton setSelected:YES];
-        
-    }
-    else{
-        
-        [self.favoriteButton setSelected:NO];
-        
-        
-    }
-     
-     
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-      self.detailTime.text = self.post.createdAt.timeAgoSinceNow;
-    self.detailCaption.text = self.post.caption;
+    return 2;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    self.detailLocation.text = self.post.location;
-    
-    self.numLikes.text = [self.post.likeCount stringValue];
-    
-    if([self.post.likeCount isEqualToNumber:[NSNumber numberWithInt:1]]){
+    if(indexPath.row == 0){
         
-        self.likesLabel.text = @"Like";
         
+        
+        HeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"headercell"];
+        
+        cell.user = self.post.author;
+        Post *post  = self.post;
+        cell.locationLabel.text = post.location;
+        return cell;
     }
     
     else{
-        self.likesLabel.text = @"Likes";
+    
+    PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"postcell"];
+    
+ 
+    cell.helper = [[LikeCommentHelper alloc] initWithPost:self.post];
+    
+    cell.post = self.post;
+    cell.commentdelegate = self;
+    cell.likeDelegate = self;
         
+    
+    return cell;
         
     }
     
+   
+    
+}
+
+- (void)didClickCommentOfPost:(Post *)post{
+    
+    self.commentedPost = post;
     
     
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    
+    UINavigationController *navigationController = [segue destinationViewController];
+    
+    
+    if([ navigationController.topViewController isKindOfClass:[CommentViewController class]]){
+        
+        CommentViewController *commentController = (CommentViewController*)navigationController.topViewController;
+        commentController.post = self.commentedPost;
+        // becase we are composing from timeline we are not replying to a tweet
+        NSLog(@"Comment Picture Segue");
+    }
+    
 }
-*/
+
+- (void)didLike{
+    
+    [self.delegate didLike];
+}
 
 @end

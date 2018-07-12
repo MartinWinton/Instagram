@@ -10,11 +10,20 @@
 #import "Post.h"
 #import "Parse.h"
 #import "LikeCommentHelper.h"
+#import "FeedViewController.h"
+
+@protocol DetailViewControllerDelegate
+
+- (void)didLike;
+@end
+
 
 @interface DetailViewController : UIViewController
 
+
 @property (weak, nonatomic) Post *post;
-@property (nonatomic,strong)  LikeCommentHelper *helper;
+@property (nonatomic, weak) id<DetailViewControllerDelegate> delegate;
+
 
 
 @end

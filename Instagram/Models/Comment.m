@@ -25,6 +25,7 @@
     NSMutableArray *tempComments = [NSMutableArray arrayWithArray:post.comments];
     [tempComments addObject:newComment];
     post.comments = [NSArray arrayWithArray:tempComments];
+    post.commentCount = [NSNumber numberWithInteger:post.comments.count];
     
     [post saveInBackgroundWithBlock: completion];
 }

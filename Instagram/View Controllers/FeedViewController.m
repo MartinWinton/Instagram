@@ -16,7 +16,8 @@
 #import "GridViewController.h"
 #import "LoginViewController.h"
 #import "CommentViewController.h"
-@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIScrollViewDelegate, ComposeViewControllerDelegate,PostCellDelegate,GridViewControllerDelegate,PostCellCommentDelegate>
+#import "SVProgressHUD.h"
+@interface FeedViewController () <UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate,UIScrollViewDelegate, ComposeViewControllerDelegate,PostCellDelegate,GridViewControllerDelegate,PostCellCommentDelegate,DetailViewControllerDelegate,CommentViewControllerDelegate>
 @property (nonatomic, strong) UIImage *selectedComposeImage;
 @property (weak, nonatomic) IBOutlet UITableView *feedView;
 @property (nonatomic,strong) NSMutableArray *posts;
@@ -125,6 +126,8 @@ InfiniteScrollActivityView* loadingMoreView;
     [self.feedView insertSubview:refreshControl atIndex:0];
     // create refresh control and insert at top of tableview
     [super viewDidLoad];
+    
+    [SVProgressHUD showWithStatus:@"Loading Posts"];
     
     [self getFeed];
     
@@ -274,8 +277,9 @@ InfiniteScrollActivityView* loadingMoreView;
         
         DetailViewController *detailController = (DetailViewController*)navigationController.topViewController;
         detailController.post = post;
+        detailController.delegate = self;
         
-        detailController.helper = [[LikeCommentHelper alloc] initWithPost:post];
+ 
 
         // becase we are composing from timeline we are not replying to a tweet
         NSLog(@"Detail Picture Segue");
@@ -286,6 +290,7 @@ InfiniteScrollActivityView* loadingMoreView;
         
         CommentViewController *commentController = (CommentViewController*)navigationController.topViewController;
         commentController.post = self.commentedPost;
+        commentController.delegate = self;
         
         
         
@@ -321,6 +326,8 @@ InfiniteScrollActivityView* loadingMoreView;
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
     [query includeKey:@"author"];
+    [query includeKey:@"objectId"];
+
 
     query.limit = 20;
     
@@ -339,6 +346,7 @@ InfiniteScrollActivityView* loadingMoreView;
             }
             self.posts = postsAndNames;
             [self.feedView reloadData];
+            [SVProgressHUD dismiss];
         } else {
             NSLog(@" Error man%@", error.localizedDescription);
         }
@@ -417,8 +425,7 @@ InfiniteScrollActivityView* loadingMoreView;
     [self getFeed];
     [refreshControl endRefreshing];
 
-    
-    
+
     
 }
 
@@ -457,5 +464,23 @@ InfiniteScrollActivityView* loadingMoreView;
     self.commentedPost = post;
 }
 
+- (void)didLike{
+    
+    [self getFeed];
+    
+    [self.feedView reloadData];
+    
+    
+
+}
+
+- (void)didComment{
+    
+    [self getFeed];
+    
+    [self.feedView reloadData];
+    
+    
+}
 
 @end

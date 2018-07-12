@@ -10,8 +10,15 @@
 #import "Post.h"
 #import "Parse.h"
 
+@protocol CommentViewControllerDelegate
+
+- (void)didComment;
+@end
+
 @interface CommentViewController : UIViewController
 @property (weak, nonatomic) Post *post;
+@property (nonatomic, weak) id<CommentViewControllerDelegate> delegate;
+
 
 
 @end

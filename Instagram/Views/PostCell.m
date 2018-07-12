@@ -35,6 +35,7 @@
     
     [self.helper toggleFavorite];
     [self reloadData];
+    [self.likeDelegate didLike];
 }
 
 - (void)setPost:(Post *)post{
@@ -110,6 +111,19 @@
         self.postTime.text = self.post.createdAt.timeAgoSinceNow;
 
         self.postCaption.text = self.post.caption;
+        
+     //   if(self.post.comments.count > 0){
+            
+        [self.viewCommentsButton setTitle:[NSString stringWithFormat:@"%@%@%@",@"View all ", [self.post.commentCount stringValue], @" comments"] forState:UIControlStateNormal];
+        [self.viewCommentsButton setTitle:[NSString stringWithFormat:@"%@%@%@",@"View all ", [self.post.commentCount stringValue], @" comments"] forState:UIControlStateSelected];
+     //   }
+        
+      //  else{
+            
+          //  self.viewCommentsButton.hidden = true;
+//}
+        
+        
         
         
         self.numLikesLabel.text = [self.post.likeCount stringValue];

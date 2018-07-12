@@ -41,6 +41,16 @@ The following **additional** features are implemented:
 - [x] When updating a profile pic after clicking on a user's own post, the profile pic on the user tab is also updated and vice versa
 - [x] Posting increases the post counter on the users profile page
 - [x] Comments have profile pics and usernames
+- [x] Users can access comments from both feedview and detailed view
+- [x] When users like a post on the detail view, the feed view is updated to reflect this
+- [x] All actions that require loading UI have personalized loading screens 
+- [x] Users can view detail view of post by clicking on grid cell of profile view
+- [x] Users can click on the edit profile button on their profile to edit their name and their bio
+- [x] When updating profile, both the feed and the profile page are updated with the new data
+- [x] Edit profile button is only shown if user is on own profile page, whether through tab or by clicking on picture
+- [x] Each post on feed and on detail view has a "View (#number of comments) comments" label that updates whenever user comments
+
+
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
