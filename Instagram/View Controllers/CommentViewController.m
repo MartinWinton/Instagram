@@ -83,7 +83,7 @@
 -(void) getFeed{
     
     PFQuery *query = [PFQuery queryWithClassName:@"Comment"];
-    [query orderByDescending:@"createdAt"];
+    [query orderByAscending:@"createdAt"];
     [query includeKey:@"author"];
     [query whereKey:@"postID" equalTo:self.post.objectId];
     

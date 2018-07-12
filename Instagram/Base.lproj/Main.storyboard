@@ -791,7 +791,7 @@
                                                         <constraint firstAttribute="height" constant="25" id="rNb-hs-jcd"/>
                                                     </constraints>
                                                     <state key="normal" title="Like" image="button:m5G-bM-jer:image"/>
-                                                    <state key="selected" title="Liked!" image="C4366159-C5F7-4EBA-AB9C-8BD2DBE38C93"/>
+                                                    <state key="selected" title="Liked!" image="2887DFE4-9CAE-4158-9265-08F5EFEC540C"/>
                                                     <connections>
                                                         <action selector="didClickLike:" destination="wEr-9e-X4L" eventType="touchUpInside" id="fnL-3w-tov"/>
                                                     </connections>
@@ -827,7 +827,7 @@
                                                         <constraint firstAttribute="width" constant="25" id="O9h-fK-WlJ"/>
                                                     </constraints>
                                                     <state key="normal" title="Comment" image="button:XmD-In-XCa:image"/>
-                                                    <state key="selected" title="Liked!" image="C4366159-C5F7-4EBA-AB9C-8BD2DBE38C93"/>
+                                                    <state key="selected" title="Liked!" image="2887DFE4-9CAE-4158-9265-08F5EFEC540C"/>
                                                     <connections>
                                                         <action selector="didClickComment:" destination="wEr-9e-X4L" eventType="touchUpInside" id="Gjz-3m-PYe"/>
                                                         <segue destination="95p-H8-WvJ" kind="show" id="BPt-wf-4LG"/>
@@ -1010,7 +1010,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="C4366159-C5F7-4EBA-AB9C-8BD2DBE38C93" width="32" height="32">
+        <image name="2887DFE4-9CAE-4158-9265-08F5EFEC540C" width="32" height="32">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGVVZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEgcI
 ExQZHh8jJCsuMTtDR0tPUlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdz

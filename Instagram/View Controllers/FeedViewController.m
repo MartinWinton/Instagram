@@ -22,7 +22,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *feedView;
 @property (nonatomic,strong) NSMutableArray *posts;
 @property (assign, nonatomic) BOOL isMoreDataLoading;
-@property (assign, nonatomic) Post *lastPost;
 @property (assign, nonatomic) Post *commentedPost;
 
 
@@ -329,7 +328,7 @@ InfiniteScrollActivityView* loadingMoreView;
     [query includeKey:@"objectId"];
 
 
-    query.limit = 20;
+    query.limit = 5;
     
     // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
@@ -357,33 +356,43 @@ InfiniteScrollActivityView* loadingMoreView;
     
     // Get timeline
     
-    self.lastPost   = [self.posts objectAtIndex:self.posts.count-1];
+    Post *lastPost   = [self.posts objectAtIndex:self.posts.count-1];
     // get most oldest tweet, i.e. end of timeline
     
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
-    [query whereKey:@"createdAt" greaterThan:self.lastPost.createdAt];
+    [query whereKey:@"createdAt" lessThan:lastPost.createdAt];
     [query includeKey:@"author"];
     
-    query.limit = 3;
+    query.limit = 5;
     
     // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
         if (posts) {
             
-            
+
             self.isMoreDataLoading = NO;
             // to prevent calling function more than once
+            NSMutableArray *newPaths = [NSMutableArray array];
+            for(Post *p in posts){
+                [self.posts addObject:p.author];
+                NSIndexPath *newPath = [NSIndexPath indexPathForRow:self.posts.count-1 inSection:0];
+                [newPaths addObject:newPath];
+                
+
+                [self.posts addObject:p];
+                newPath = [NSIndexPath indexPathForRow:self.posts.count-1 inSection:0];
+                [newPaths addObject:newPath];
+                
+
+                
+            }
+            
+            [self.feedView insertRowsAtIndexPaths:newPaths withRowAnimation:UITableViewRowAnimationNone];
             
             [loadingMoreView stopAnimating];
+            
 
-            
-            NSArray *newPosts =[self.posts arrayByAddingObjectsFromArray:posts];
-            
-            self.posts = [NSMutableArray arrayWithArray:newPosts];
-            
-            [self.feedView reloadData];
-            
             
             
             
