@@ -293,7 +293,7 @@ InfiniteScrollActivityView* loadingMoreView;
     [query includeKey:@"author"];
     [query includeKey:@"objectId"];
     
-    query.limit = 10;
+    query.limit = 5;
     
     // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
@@ -328,13 +328,13 @@ InfiniteScrollActivityView* loadingMoreView;
     [query whereKey:@"createdAt" lessThan:lastPost.createdAt];
     [query includeKey:@"author"];
     
-    query.limit = 5;
+    query.limit = 4;
     
     // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
         if (posts) {
             
-            self.isMoreDataLoading = NO;
+            NSLog(@"DONE 🤓🤓🤓🤓🤓");
             // to prevent calling function more than once
             NSMutableArray *newPaths = [NSMutableArray array];
             // create array of new index paths to be created
@@ -351,11 +351,26 @@ InfiniteScrollActivityView* loadingMoreView;
                 
                 
             }
-            
-            [self.feedView insertRowsAtIndexPaths:newPaths withRowAnimation:UITableViewRowAnimationNone];
-            // add noew posts at bottom of table
-            
             [loadingMoreView stopAnimating];
+
+            
+            [self.feedView performBatchUpdates:^{
+                [self.feedView insertRowsAtIndexPaths:newPaths withRowAnimation:UITableViewRowAnimationNone];
+                // this is to make sure the animation is done before saying we are no longer getting data
+
+            } completion:^(BOOL finished) {
+                
+                if(finished){
+                    self.isMoreDataLoading = NO;
+
+                    
+                    
+                }
+
+            }];
+            // add new posts at bottom of table
+     
+            
    
             
         } else {
@@ -373,9 +388,15 @@ InfiniteScrollActivityView* loadingMoreView;
         // When the user has scrolled past the threshold, start requesting
         if(scrollView.contentOffset.y > scrollOffsetThreshold && self.feedView.isDragging) {
             self.isMoreDataLoading = true;
+            NSLog(@"GETTING DATA 🤓🤓🤓🤓🤓");
+
             
             // Update position of loadingMoreView, and start loading indicator
             CGRect frame = CGRectMake(0, self.feedView.contentSize.height, self.feedView.bounds.size.width, InfiniteScrollActivityView.defaultHeight);
+            
+            
+            
+            
             loadingMoreView.frame = frame;
             [loadingMoreView startAnimating];
             
@@ -395,6 +416,11 @@ InfiniteScrollActivityView* loadingMoreView;
 -(void)didShare{
     
     [self getFeed];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.feedView scrollToRowAtIndexPath:indexPath
+                         atScrollPosition:UITableViewScrollPositionTop
+                                 animated:YES];
     
     [self.feedDelegate didUpdateFeed];
     // tells profile tab to update feed too

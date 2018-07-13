@@ -3,7 +3,7 @@
 
 **Instagram** is a photo sharing app using Parse as its backend.
 
-Time spent: **15** hours spent in total
+Time spent: **32** hours spent in total
 
 ## User Stories
 
@@ -55,6 +55,8 @@ The following **additional** features are implemented:
 - [x] Each post on feed and on detail view has a "View (#number of comments) comments" label that updates whenever user comments
 - [x] When posting a comment, the textbox is cleared. Users cannot post empty comments
 - [x] follower/following count is random
+- [x] When posting a new gram, the feed automatically moves to the top to show the new post
+- [x] When there are two or more likes, the usernames of the first two likes are displayed
 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
@@ -75,6 +77,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 List an 3rd party libraries, icons, graphics, or other assets you used in your app.
 
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
+
 
 
 ## Notes

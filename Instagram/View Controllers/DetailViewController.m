@@ -13,8 +13,9 @@
 #import "PostCell.h"
 #import "HeaderCell.h"
 #import "CommentViewController.h"
+#import "GridViewController.h"
 
-@interface DetailViewController ()<UITableViewDelegate,UITableViewDataSource,PostCellCommentDelegate,PostCellLikeDelegate,CommentViewControllerDelegate>
+@interface DetailViewController ()<UITableViewDelegate,UITableViewDataSource,PostCellCommentDelegate,PostCellLikeDelegate,CommentViewControllerDelegate,GridViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *detailTableView;
 @property (assign, nonatomic) Post *commentedPost;
 
@@ -56,6 +57,7 @@
     
     if(indexPath.row == 0){
         HeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"headercell"];
+
         
         cell.user = self.post.author;
         Post *post  = self.post;
@@ -66,6 +68,8 @@
     else{
         
         PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"postcell"];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+
         cell.helper = [[LikeCommentHelper alloc] initWithPost:self.post];
         cell.post = self.post;
         cell.commentdelegate = self;
@@ -106,6 +110,17 @@
         NSLog(@"Comment Picture Segue");
     }
     
+    else if([ navigationController.topViewController isKindOfClass:[GridViewController class]]){
+        
+        GridViewController *gridController = (GridViewController*)navigationController.topViewController;
+        gridController.user = self.post.author;
+        gridController.didTap = true;
+        gridController.delegate = self;
+        
+        NSLog(@"Profile View Segue");
+    }
+    
+    
 }
 
 - (void)didLike{
@@ -120,4 +135,15 @@
     }];
 }
 
+
+- (void)didChangeProfile{
+    
+    [self.post fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        // get new post and update accordingly
+        [self.detailTableView reloadData];
+        [self.delegate didLike];
+    }];
+    
+    
+}
 @end

@@ -106,6 +106,63 @@
     
     self.postCaption.text = self.post.caption;
     
+    
+    self.numLikesLabel.text = [self.post.likeCount stringValue];
+    
+    if([self.post.likeCount isEqualToNumber:[NSNumber numberWithInt:1]]){
+        
+        self.likesLabel.text = @"Like";
+        
+    }
+    
+    else{
+        self.likesLabel.text = @"Likes";
+        
+        
+    }
+    
+    
+    if(self.post.likeUsernames.count >= 2){
+        
+        self.numLikesLabel.text =  @"";
+        self.likesLabel.text =  @"Liked by..";
+
+        
+        PFUser *firstUser = self.post.likeUsernames[0];
+        PFUser *secondUser = self.post.likeUsernames[1];
+        
+        
+        
+        if(self.post.likeUsernames.count == 2){
+        
+        
+        [firstUser fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+            [secondUser fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                
+                self.likesLabel.text = [NSString stringWithFormat:@"%@%@%@%@", @"Liked by ", firstUser.username, @" and ", secondUser.username];
+            }];
+        }];
+            
+        }
+        
+        else{
+            
+            [firstUser fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                [secondUser fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+                    
+                    self.likesLabel.text = [NSString stringWithFormat:@"%@%@%@%@%@%lu%@", @"Liked by ", firstUser.username, @", ", secondUser.username, @" and ", (unsigned long)self.post.likeUsernames.count-2, @" others"];
+                }];
+            }];
+            
+            
+        }
+
+ 
+        
+        
+        
+    }
+    
     if(self.post.comments.count > 0){
         
         self.viewCommentsButton.hidden = NO;
@@ -137,21 +194,7 @@
     
     
     
-    
-    self.numLikesLabel.text = [self.post.likeCount stringValue];
-    
-    if([self.post.likeCount isEqualToNumber:[NSNumber numberWithInt:1]]){
-        
-        self.likesLabel.text = @"Like";
-        
-    }
-    
-    else{
-        self.likesLabel.text = @"Likes";
-        
-        
-    }
-    
+ 
     
     
 }
