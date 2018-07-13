@@ -115,16 +115,18 @@
        if(self.post.comments.count > 0){
            
            self.viewCommentsButton.hidden = NO;
-
-            
+        
         [self.viewCommentsButton setTitle:[NSString stringWithFormat:@"%@%@%@",@"View all ", [self.post.commentCount stringValue], @" comments"] forState:UIControlStateNormal];
         [self.viewCommentsButton setTitle:[NSString stringWithFormat:@"%@%@%@",@"View all ", [self.post.commentCount stringValue], @" comments"] forState:UIControlStateSelected];
+           
+
         }
         
         else{
             
             self.viewCommentsButton.hidden = YES;
-}
+     
+        }
         
         
         

@@ -36,6 +36,8 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
+- [x] Password input text is hidden
+- [x] When logging in fails, an alert is shown
 - [x] Infinite scrolling adds new posts to bottom of table instead of reloading entire table, allowing for smooth scrolling
 - [x] When sucessfully posting an image, the feed updates to show the new image
 - [x] Users can also unlike posts
@@ -48,9 +50,11 @@ The following **additional** features are implemented:
 - [x] Users can view detail view of post by clicking on grid cell of profile view
 - [x] Users can click on the edit profile button on their profile to edit their name and their bio
 - [x] When updating profile, both the feed and the profile page are updated with the new data
+- [x] Profile page displays username on header
 - [x] Edit profile button is only shown if user is on own profile page, whether through tab or by clicking on picture
 - [x] Each post on feed and on detail view has a "View (#number of comments) comments" label that updates whenever user comments
-
+- [x] When posting a comment, the textbox is cleared. Users cannot post empty comments
+- [x] follower/following count is random
 
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):

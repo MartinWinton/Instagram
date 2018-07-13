@@ -17,7 +17,7 @@
 #import "ProfileEditViewController.h"
 
 
-@interface GridViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ProfileUpdateDelegate,ProfileEditViewControllerDelegate>
+@interface GridViewController ()<UICollectionViewDataSource, UICollectionViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,ProfileUpdateDelegate,ProfileEditViewControllerDelegate,FeedUpdateDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *profileGridView;
 @property (nonatomic,strong) NSArray *posts;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
@@ -136,6 +136,7 @@
     FeedViewController *feed = (FeedViewController*)navfeed.topViewController;
     
     feed.delegate = self;
+    feed.feedDelegate = self;
     
     // set up feed delegate  to make sure posts are updated
     
@@ -179,14 +180,10 @@
         
         
         self.user[@"numPosts"] = @"0";
-        self.user[@"numFollowers"] = @"0";
-        self.user[@"numFollowing"] = @"0";
-        
+
         self.numPostsLabel.text = @"0";
-        self.numFollowersLabel.text = @"0";
-        self.numFollowingLabel.text = @"0";
-        
-        // initialize users with followers
+     
+        // initialize users with 0 posts
         
         
         
@@ -202,9 +199,7 @@
     else{
         
         self.numPostsLabel.text = self.user[@"numPosts"];
-        self.numFollowersLabel.text =  self.user[@"numFollowers"];
-        self.numFollowingLabel.text =  self.user[@"numFollowing"];
-        
+       
         
         
         
@@ -217,6 +212,8 @@
     
     self.usernameLabel.text = self.user[@"Name"];
     self.descriptionLabel.text = self.user[@"Biography"];
+    self.numFollowersLabel.text =  [NSString stringWithFormat:@"%d",arc4random_uniform(500)];
+       self.numFollowingLabel.text =  [NSString stringWithFormat:@"%d",arc4random_uniform(500)];
 
 
     
@@ -390,6 +387,11 @@
     }];
     
     
+}
+
+- (void)didUpdateFeed{
+    
+    [self getFeed];
 }
 
 

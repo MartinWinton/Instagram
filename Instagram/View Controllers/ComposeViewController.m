@@ -53,6 +53,7 @@
     [super viewDidLoad];
     
     self.composeImage.image = self.postedImage;
+    
     // Do any additional setup after loading the view.
 }
 

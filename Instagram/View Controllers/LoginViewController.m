@@ -89,6 +89,20 @@
     
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
         if (error != nil) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error Logging In"
+                                                                           message:@"Change inputs and try again."
+                                                                    preferredStyle:(UIAlertControllerStyleAlert)];
+            
+            
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok"
+                                                                   style:UIAlertActionStyleCancel
+                                                                 handler:^(UIAlertAction * _Nonnull action) {
+                                                                     // handle cancel response here. Doing nothing will dismiss the view.
+                                                                 }];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:YES completion:nil];
+
+            
             NSLog(@"User log in failed: %@", error.localizedDescription);
         } else {
             NSLog(@"User logged in successfully");

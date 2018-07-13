@@ -15,10 +15,13 @@
 - (void)didChangeProfile;
 @end
 
+
+
 @interface GridViewController : UIViewController
 @property (weak, nonatomic) PFUser *user;
 @property BOOL didTap;
 @property (nonatomic, weak) id<GridViewControllerDelegate> delegate;
+
 
 
 

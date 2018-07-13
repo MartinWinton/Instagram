@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0675784120F7D1DB005104DB /* ProfileEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0675784020F7D1DB005104DB /* ProfileEditViewController.m */; };
+		0675784420F81FF3005104DB /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0675784320F81FF3005104DB /* CameraViewController.m */; };
 		06CB4EDE20F3F67500D909F0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 06CB4EDD20F3F67500D909F0 /* AppDelegate.m */; };
 		06CB4EE420F3F67500D909F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 06CB4EE220F3F67500D909F0 /* Main.storyboard */; };
 		06CB4EE620F3F67600D909F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06CB4EE520F3F67600D909F0 /* Assets.xcassets */; };
@@ -54,6 +55,8 @@
 /* Begin PBXFileReference section */
 		0675783F20F7D1DB005104DB /* ProfileEditViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProfileEditViewController.h; sourceTree = "<group>"; };
 		0675784020F7D1DB005104DB /* ProfileEditViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProfileEditViewController.m; sourceTree = "<group>"; };
+		0675784220F81FF3005104DB /* CameraViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		0675784320F81FF3005104DB /* CameraViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		06CB4ED920F3F67500D909F0 /* Instagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		06CB4EDC20F3F67500D909F0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		06CB4EDD20F3F67500D909F0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -210,6 +213,8 @@
 				06CB4F4720F6AE7200D909F0 /* CommentViewController.m */,
 				0675783F20F7D1DB005104DB /* ProfileEditViewController.h */,
 				0675784020F7D1DB005104DB /* ProfileEditViewController.m */,
+				0675784220F81FF3005104DB /* CameraViewController.h */,
+				0675784320F81FF3005104DB /* CameraViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -502,6 +507,7 @@
 				06CB4F3420F5360A00D909F0 /* LikeCommentHelper.m in Sources */,
 				06CB4F3D20F566A200D909F0 /* PostCollectionCell.m in Sources */,
 				0675784120F7D1DB005104DB /* ProfileEditViewController.m in Sources */,
+				0675784420F81FF3005104DB /* CameraViewController.m in Sources */,
 				06CB4F3A20F565B200D909F0 /* GridViewController.m in Sources */,
 				06CB4F1A20F4035200D909F0 /* Post.m in Sources */,
 			);

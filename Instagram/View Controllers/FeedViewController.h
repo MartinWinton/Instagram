@@ -14,8 +14,15 @@
 
 @end
 
+@protocol FeedUpdateDelegate
+
+- (void)didUpdateFeed;
+@end
+
 @interface FeedViewController : UIViewController
 @property (nonatomic, weak) id<ProfileUpdateDelegate> delegate;
+@property (nonatomic, weak) id<FeedUpdateDelegate> feedDelegate;
+
 
 
 

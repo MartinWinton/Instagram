@@ -120,6 +120,7 @@ InfiniteScrollActivityView* loadingMoreView;
     
     feed.delegate = self;
     
+    
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.feedView insertSubview:refreshControl atIndex:0];
@@ -298,7 +299,8 @@ InfiniteScrollActivityView* loadingMoreView;
     }
         
     
-    else {
+    else if([ navigationController.topViewController isKindOfClass:[GridViewController class]]){
+        
            GridViewController *gridController = (GridViewController*)navigationController.topViewController;
         
 
@@ -444,7 +446,7 @@ InfiniteScrollActivityView* loadingMoreView;
     [self getFeed];
     
     [self.feedView reloadData];
-    [self.delegate didChangeProfile];
+    [self.feedDelegate didUpdateFeed];
 
 
     
@@ -491,5 +493,6 @@ InfiniteScrollActivityView* loadingMoreView;
     
     
 }
+
 
 @end

@@ -27,15 +27,21 @@
 }
 - (IBAction)didClickPost:(id)sender {
     
+    
+    
+    if([self.commentTextField.text length] > 0){
+    
     [SVProgressHUD showWithStatus:@"Posting Comment"];
     
     [Comment postComment:self.commentTextField.text ToPost:self.post withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
         if(succeeded){
             NSLog(@"Success!");
             [self getFeed];
+            self.commentTextField.text = @"";
             [self.delegate didComment];
         }
                   }];
+    }
   
 }
 
