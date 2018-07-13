@@ -14,7 +14,7 @@
 #import "HeaderCell.h"
 #import "CommentViewController.h"
 
-@interface DetailViewController ()<UITableViewDelegate,UITableViewDataSource,PostCellCommentDelegate,PostCellLikeDelegate>
+@interface DetailViewController ()<UITableViewDelegate,UITableViewDataSource,PostCellCommentDelegate,PostCellLikeDelegate,CommentViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *detailTableView;
 @property (assign, nonatomic) Post *commentedPost;
 
@@ -110,6 +110,7 @@
         
         CommentViewController *commentController = (CommentViewController*)navigationController.topViewController;
         commentController.post = self.commentedPost;
+        commentController.delegate = self;
         // becase we are composing from timeline we are not replying to a tweet
         NSLog(@"Comment Picture Segue");
     }
@@ -119,6 +120,12 @@
 - (void)didLike{
     
     [self.delegate didLike];
+}
+- (void)didComment{
+    
+    [self.post fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        [self.detailTableView reloadData];
+    }];
 }
 
 @end

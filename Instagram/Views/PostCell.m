@@ -35,7 +35,6 @@
     
     [self.helper toggleFavorite];
     [self reloadData];
-    [self.likeDelegate didLike];
 }
 
 - (void)setPost:(Post *)post{

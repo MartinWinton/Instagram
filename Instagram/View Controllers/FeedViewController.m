@@ -479,7 +479,7 @@ InfiniteScrollActivityView* loadingMoreView;
     
     [self getFeed];
     
-    [self.feedView reloadData];
+    
     
     
 

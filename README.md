@@ -45,9 +45,9 @@ The following **additional** features are implemented:
 - [x] Posting increases the post counter on the users profile page
 - [x] Comments have profile pics and usernames
 - [x] Users can access comments from both feedview and detailed view
-- [x] When users like a post on the detail view, the feed view is updated to reflect this
 - [x] All actions that require loading UI have personalized loading screens 
 - [x] Users can view detail view of post by clicking on grid cell of profile view
+- [x] Detail view also allows users to like and view comments
 - [x] Users can click on the edit profile button on their profile to edit their name and their bio
 - [x] When updating profile, both the feed and the profile page are updated with the new data
 - [x] Profile page displays username on header
