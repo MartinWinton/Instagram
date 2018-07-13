@@ -27,7 +27,7 @@
 
 - (IBAction)didClickBack:(id)sender {
     [self dismissViewControllerAnimated:true completion:nil];
-
+    
 }
 
 - (void)viewDidLoad {
@@ -35,10 +35,7 @@
     self.detailTableView.dataSource = self;
     self.detailTableView.delegate = self;
     self.detailTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
- 
-  
-    // Do any additional setup after loading the view.
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,14 +49,12 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     return 2;
+    // one for header and one for post
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if(indexPath.row == 0){
-        
-        
-        
         HeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"headercell"];
         
         cell.user = self.post.author;
@@ -69,22 +64,18 @@
     }
     
     else{
-    
-    PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"postcell"];
-    
- 
-    cell.helper = [[LikeCommentHelper alloc] initWithPost:self.post];
-    
-    cell.post = self.post;
-    cell.commentdelegate = self;
-    cell.likeDelegate = self;
         
-    
-    return cell;
+        PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"postcell"];
+        cell.helper = [[LikeCommentHelper alloc] initWithPost:self.post];
+        cell.post = self.post;
+        cell.commentdelegate = self;
+        cell.likeDelegate = self;
+        
+        return cell;
         
     }
     
-   
+    
     
 }
 
@@ -124,6 +115,7 @@
 - (void)didComment{
     
     [self.post fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        // get new post and update accordingly
         [self.detailTableView reloadData];
     }];
 }

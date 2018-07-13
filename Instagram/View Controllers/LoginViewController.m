@@ -26,7 +26,7 @@
     self.signUpButton.clipsToBounds = true;
     self.loginButton.layer.cornerRadius = 10;
     self.loginButton.clipsToBounds = true;
-    // Do any additional setup after loading the view.
+    // circular buttons
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,13 +41,12 @@
                                                             preferredStyle:(UIAlertControllerStyleAlert)];
     
     
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Sorry!"
+    UIAlertAction *returnAction = [UIAlertAction actionWithTitle:@"Sorry!"
                                                            style:UIAlertActionStyleCancel
                                                          handler:^(UIAlertAction * _Nonnull action) {
-                                                             // handle cancel response here. Doing nothing will dismiss the view.
                                                          }];
-    [alert addAction:cancelAction];
-
+    [alert addAction:returnAction];
+    
     // initialize a user object
     PFUser *newUser = [PFUser user];
     
@@ -56,25 +55,22 @@
     newUser.password = self.passwordField.text;
     
     if([self.usernameField.text isEqual:@""] || [self.passwordField.text isEqual:@""]){
-        [self presentViewController:alert animated:YES completion:^{
-            // optional code for what happens after the alert controller has finished presenting
-        }];
+        [self presentViewController:alert animated:YES completion:nil];
     }
     
     else{
-    
-    // call sign up function on the object
-    [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
-        if (error != nil) {
-            NSLog(@"Error: %@", error.localizedDescription);
-        } else {
-            NSLog(@"User registered successfully");
-            [self performSegueWithIdentifier:@"signing" sender:nil];
-
-            
-            // manually segue to logged in view
-        }
-    }];
+        
+        // call sign up function on the object
+        [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
+            if (error != nil) {
+                NSLog(@"Error: %@", error.localizedDescription);
+            } else {
+                NSLog(@"User registered successfully");
+                [self performSegueWithIdentifier:@"signing" sender:nil];
+                
+                // manually segue to logged in view
+            }
+        }];
     }
 }
 - (IBAction)didSignUp:(id)sender {
@@ -95,19 +91,18 @@
             
             
             UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Ok"
-                                                                   style:UIAlertActionStyleCancel
-                                                                 handler:^(UIAlertAction * _Nonnull action) {
-                                                                     // handle cancel response here. Doing nothing will dismiss the view.
-                                                                 }];
+                                                               style:UIAlertActionStyleCancel
+                                                             handler:^(UIAlertAction * _Nonnull action) {
+                                                                 // handle cancel response here. Doing nothing will dismiss the view.
+                                                             }];
             [alert addAction:okAction];
             [self presentViewController:alert animated:YES completion:nil];
-
             
             NSLog(@"User log in failed: %@", error.localizedDescription);
         } else {
             NSLog(@"User logged in successfully");
             [self performSegueWithIdentifier:@"signing" sender:nil];
-
+            
             
             // display view controller that needs to shown after successful login
         }
@@ -119,14 +114,14 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 
 

@@ -13,5 +13,5 @@
 
 -(void)toggleFavorite;
 - (instancetype)initWithPost:(Post *)post;
-+ (BOOL)containsUser: (Post *)post;
++ (BOOL)currentUserHasLikedPost: (Post *)post;
 @end

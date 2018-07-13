@@ -19,6 +19,9 @@
 @dynamic location;
 @dynamic likeCount;
 @dynamic commentCount;
+@dynamic  authorUsername;
+@dynamic comments;
+@dynamic likeUsernames;
 + (nonnull NSString *) parseClassName {
     return @"Post";
 }
@@ -91,14 +94,6 @@
     return [PFFile fileWithName:@"image.png" data:imageData];
 }
 
-
--(void) getPost{
-    
-    PFQuery *query = [Post query];
-    [query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
-        
-    }];
-}
 
 
 

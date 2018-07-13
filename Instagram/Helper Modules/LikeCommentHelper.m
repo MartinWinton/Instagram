@@ -21,26 +21,20 @@
     }
     
     return self;
-    
-    
 }
 
 -(void)toggleFavorite{
     
     
-    
-    if([LikeCommentHelper containsUser:self.post]){
+    if([LikeCommentHelper currentUserHasLikedPost:self.post]){
         
         
-        
-        
-        [self unfavorite:self.post.authorUsername];
+        [self unfavoritePostWithAsUsername:self.post.authorUsername];
         
         [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             if(succeeded){
                 NSLog(@"Successfully unfavorited post");
 
-                
             }
             
             else{
@@ -52,16 +46,11 @@
         }];
         
       
-        
-        
-        
     }
     
     else{
         
-        [self favorite:self.post.authorUsername];
-        
-        
+        [self favoritePostWithAsUsername:self.post.authorUsername];
         
         [self.post saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
             if(succeeded){
@@ -78,13 +67,10 @@
             }
         }];
         
-        
-        
-        
     }
 }
 
--(void) unfavorite:(NSString *)username{
+-(void) unfavoritePostWithAsUsername:(NSString *)username{
     
     NSMutableArray *tempNames = [NSMutableArray arrayWithArray:self.post.likeUsernames];
     
@@ -106,7 +92,7 @@
 
 }
 
--(void) favorite:(NSString *)username{
+-(void) favoritePostWithAsUsername:(NSString *)username{
     
     NSMutableArray *tempNames = [NSMutableArray arrayWithArray:self.post.likeUsernames];
     
@@ -118,10 +104,9 @@
     
 
 
-    
 }
 
-+ (BOOL)containsUser: (Post *)post{
++ (BOOL)currentUserHasLikedPost: (Post *)post{
     
     for(int i = 0; i < post.likeUsernames.count; i ++){
         

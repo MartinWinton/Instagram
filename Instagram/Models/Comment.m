@@ -16,7 +16,7 @@
 @dynamic postID;
 
 
-+ (void) postComment:( NSString * _Nullable )text ToPost: (Post *)post withCompletion: (PFBooleanResultBlock  _Nullable)completion {
++ (void) postComment:( NSString * _Nonnull )text ToPost: (Post * _Nonnull)post withCompletion: (PFBooleanResultBlock  _Nullable)completion {
 
     Comment *newComment = [Comment new];
     newComment.text = text;

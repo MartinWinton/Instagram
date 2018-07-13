@@ -30,8 +30,8 @@
 
 
 + (void) postUserImage: ( UIImage * _Nullable )image withCaption: ( NSString * _Nullable )caption WithLocation:(NSString * _Nullable)location withCompletion: (PFBooleanResultBlock  _Nullable)completion;
-+ (UIImage *)resizeImage:(UIImage *)image withSize:(CGSize)size;
-+ (PFFile *)getPFFileFromImage: (UIImage * _Nullable)image;
++ (UIImage *_Nonnull)resizeImage:(UIImage *_Nonnull)image withSize:(CGSize)size;
++ (PFFile *_Nonnull)getPFFileFromImage: (UIImage * _Nullable)image;
 
 + (void) addPost;
 

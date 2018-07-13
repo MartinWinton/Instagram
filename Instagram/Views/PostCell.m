@@ -28,7 +28,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 - (IBAction)didClickLike:(id)sender {
@@ -39,14 +39,9 @@
 
 - (void)setPost:(Post *)post{
     _post = post;
-
+    
     NSURL *imageURL = [NSURL URLWithString:post.image.url];
     self.postImage.image = nil;
-    
-    
- 
-    
-    
     
     NSURLRequest *request = [NSURLRequest requestWithURL:imageURL];
     
@@ -76,7 +71,7 @@
                                            }
                                            
                                            
-
+                                           
                                        }
                                    }
                                    failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
@@ -85,66 +80,79 @@
     
     
     [self reloadData];
-
-}
     
+}
 
 
 
-    -(void)reloadData{
-        
-        if([LikeCommentHelper containsUser:self.post]){
-            
-            
-            
-            [self.likeButton setSelected:YES];
-            
-        }
-        else{
-            
-            [self.likeButton setSelected:NO];
-            
-            
-        }
-        
-        self.postTime.text = self.post.createdAt.timeAgoSinceNow;
 
-        self.postCaption.text = self.post.caption;
+-(void)reloadData{
+    
+    if([LikeCommentHelper currentUserHasLikedPost:self.post]){
         
-       if(self.post.comments.count > 0){
-           
-           self.viewCommentsButton.hidden = NO;
         
-        [self.viewCommentsButton setTitle:[NSString stringWithFormat:@"%@%@%@",@"View all ", [self.post.commentCount stringValue], @" comments"] forState:UIControlStateNormal];
-        [self.viewCommentsButton setTitle:[NSString stringWithFormat:@"%@%@%@",@"View all ", [self.post.commentCount stringValue], @" comments"] forState:UIControlStateSelected];
-           
-
-        }
         
-        else{
+        [self.likeButton setSelected:YES];
+        
+    }
+    else{
+        
+        [self.likeButton setSelected:NO];
+        
+        
+    }
+    
+    self.postTime.text = self.post.createdAt.timeAgoSinceNow;
+    
+    self.postCaption.text = self.post.caption;
+    
+    if(self.post.comments.count > 0){
+        
+        self.viewCommentsButton.hidden = NO;
+        
+        if(self.post.comments.count == 1){
             
-            self.viewCommentsButton.hidden = YES;
-     
-        }
-        
-        
-        
-        
-        self.numLikesLabel.text = [self.post.likeCount stringValue];
-        
-        if([self.post.likeCount isEqualToNumber:[NSNumber numberWithInt:1]]){
-            
-            self.likesLabel.text = @"Like";
+            [self.viewCommentsButton setTitle:@"View 1 Comment" forState:UIControlStateNormal];
+            [self.viewCommentsButton setTitle:@"View 1 Comment" forState:UIControlStateSelected];
             
         }
         
         else{
-            self.likesLabel.text = @"Likes";
-
+            [self.viewCommentsButton setTitle:[NSString stringWithFormat:@"%@%@%@",@"View all ", [self.post.commentCount stringValue], @" comments"] forState:UIControlStateNormal];
+            [self.viewCommentsButton setTitle:[NSString stringWithFormat:@"%@%@%@",@"View all ", [self.post.commentCount stringValue], @" comments"] forState:UIControlStateSelected];
+            
+            
             
         }
         
         
+        
+    }
+    
+    else{
+        
+        self.viewCommentsButton.hidden = YES;
+        
+    }
+    
+    
+    
+    
+    self.numLikesLabel.text = [self.post.likeCount stringValue];
+    
+    if([self.post.likeCount isEqualToNumber:[NSNumber numberWithInt:1]]){
+        
+        self.likesLabel.text = @"Like";
+        
+    }
+    
+    else{
+        self.likesLabel.text = @"Likes";
+        
+        
+    }
+    
+    
     
 }
 

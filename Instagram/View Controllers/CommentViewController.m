@@ -27,8 +27,6 @@
 }
 - (IBAction)didClickPost:(id)sender {
     
-    
-    
     if([self.commentTextField.text length] > 0){
     
     [SVProgressHUD showWithStatus:@"Posting Comment"];
@@ -50,9 +48,6 @@
     
     self.commentTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
-    
-    
-    
     self.commentTableView.delegate = self;
     self.commentTableView.dataSource = self;
     
@@ -73,30 +68,13 @@
     
 }
 
--(void)fetchComments{
-    
-    [self.post fetchInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
-        
-        self.comments = self.post.comments;
-        
-        
-        [self.commentTableView reloadData];
-        [SVProgressHUD dismiss];
-    }];
-}
-
-
 -(void) getFeed{
     
     PFQuery *query = [PFQuery queryWithClassName:@"Comment"];
     [query orderByAscending:@"createdAt"];
     [query includeKey:@"author"];
     [query whereKey:@"postID" equalTo:self.post.objectId];
-    
-     
-    
     query.limit = 20;
-    
     // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *comments, NSError *error) {
         if (comments != nil) {
@@ -105,7 +83,6 @@
             [self.commentTableView reloadData];
             [SVProgressHUD dismiss];
       
-                
             }
         
         else {
@@ -120,14 +97,7 @@
     if([self.comments[indexPath.row] isKindOfClass:[Comment class]]){
         
         Comment *comment  = self.comments[indexPath.row];
-        
-
-        
-        
-        
         CommentCell *cell = [tableView dequeueReusableCellWithIdentifier:@"commentcell"];
-        
-       
         
         cell.comment = comment;
         return cell;
@@ -138,9 +108,6 @@
     
 }
     
-    
-    
-
 
 /*
 #pragma mark - Navigation

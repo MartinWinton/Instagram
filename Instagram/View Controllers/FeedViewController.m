@@ -47,107 +47,98 @@ InfiniteScrollActivityView* loadingMoreView;
                                                             preferredStyle:(UIAlertControllerStyleActionSheet)];
     
     
-    
-    UIAlertAction *takePhoto = [UIAlertAction actionWithTitle:@"Take Photo!"
-                                                           style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                             UIImagePickerController *imagePickerVC = [UIImagePickerController new];
-                                                             imagePickerVC.delegate = self;
-                                                             imagePickerVC.allowsEditing = YES;
-                                                             imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
-                                                             
-                                                             [self presentViewController:imagePickerVC animated:YES completion:nil];
-                                                             
-                                                             
-                                                             if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                                                                 imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
-                                                             }
-                                                             else {
-                                                                 NSLog(@"Camera 🚫 available so we will use photo library instead");
-                                                                 imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-                                                             }
-                                                         }];
-    
-    UIAlertAction *chooseFromLibrary = [UIAlertAction actionWithTitle:@"Choose from Library"
+    UIAlertAction *takePhoto = [UIAlertAction actionWithTitle:@"Take Photo"
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * _Nonnull action) {
+                                                          
+                                                          // Code to present camera
                                                           UIImagePickerController *imagePickerVC = [UIImagePickerController new];
                                                           imagePickerVC.delegate = self;
                                                           imagePickerVC.allowsEditing = YES;
-                                                          imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                                                          imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
                                                           
                                                           [self presentViewController:imagePickerVC animated:YES completion:nil];
                                                           
-                                             
                                                           
+                                                          if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                                                              imagePickerVC.sourceType = UIImagePickerControllerSourceTypeCamera;
+                                                          }
+                                                          else {
+                                                              NSLog(@"Camera 🚫 available so we will use photo library instead");
+                                                              imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                                                          }
                                                       }];
+    
+    UIAlertAction *chooseFromLibrary = [UIAlertAction actionWithTitle:@"Choose from Library"
+                                                                style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction * _Nonnull action) {
+                                                                  // Code to present photo selection ivew
+                                                                  
+                                                                  UIImagePickerController *imagePickerVC = [UIImagePickerController new];
+                                                                  imagePickerVC.delegate = self;
+                                                                  imagePickerVC.allowsEditing = YES;
+                                                                  imagePickerVC.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                                                                  
+                                                                  [self presentViewController:imagePickerVC animated:YES completion:nil];
+                                                                  
+                                                                  
+                                                                  
+                                                              }];
     [alert addAction:takePhoto];
     [alert addAction:chooseFromLibrary];
-    [self presentViewController:alert animated:YES completion:^{
-        // optional code for what happens after the alert controller has finished presenting
-    }];
-
-    
- 
-    
+    [self presentViewController:alert animated:YES completion:nil];
     
 }
 - (IBAction)didLogout:(id)sender {
-
     
     [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
         
         [self.navigationController.tabBarController performSegueWithIdentifier:@"logout" sender:self];
-
-
+        
         // PFUser.current() will now be nil
     }];
-    
     
 }
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
+    
     self.feedView.delegate = self;
     self.feedView.dataSource = self;
+    
     self.feedView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    // no lines in between table
     
     
     UINavigationController *navfeed = self.tabBarController.viewControllers[1];
-    
-    
-    
     GridViewController *feed = (GridViewController*)navfeed.topViewController;
-    
     feed.delegate = self;
+    // This is for the case when user clicks on profile tab instead of clicking on a profile picture
     
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.feedView insertSubview:refreshControl atIndex:0];
     // create refresh control and insert at top of tableview
-    [super viewDidLoad];
     
     [SVProgressHUD showWithStatus:@"Loading Posts"];
-    
     [self getFeed];
-    
-   // [self.feedView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
-    //[self.feedView registerClass:[UITableViewHeaderFooterView class] forHeaderFooterViewReuseIdentifier:HeaderViewIdentifier];
+    // sv progress hud will be closed in get feed
     
     
-    // Set up Infinite Scroll loading indicator
     CGRect frame = CGRectMake(0, self.feedView.contentSize.height, self.feedView.bounds.size.width, InfiniteScrollActivityView.defaultHeight);
     loadingMoreView = [[InfiniteScrollActivityView alloc] initWithFrame:frame];
     loadingMoreView.hidden = true;
     [self.feedView addSubview:loadingMoreView];
-    
     UIEdgeInsets insets = self.feedView.contentInset;
     insets.bottom += InfiniteScrollActivityView.defaultHeight;
     self.feedView.contentInset = insets;
+    // Set up Infinite Scroll loading indicator
+    
 }
 
-    
-    
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -156,20 +147,19 @@ InfiniteScrollActivityView* loadingMoreView;
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
     
-    // Get the image captured by the UIImagePickerController
-    UIImage *originalImage = info[UIImagePickerControllerOriginalImage];
     UIImage *editedImage = info[UIImagePickerControllerEditedImage];
+    // Get the image captured by the UIImagePickerController
+    
     
     
     self.selectedComposeImage = editedImage;
-    
-    // Do something with the images (based on your use case)
+    // save selected image to give to compose view during prepare for segue
     
     // Dismiss UIImagePickerController to go back to your original view controller
     [self dismissViewControllerAnimated:YES completion:^{
         [self performSegueWithIdentifier:@"compose" sender:nil];
         // move to compose screen
-
+        
         
         
     }];
@@ -186,9 +176,8 @@ InfiniteScrollActivityView* loadingMoreView;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if([self.posts[indexPath.row] isKindOfClass:[Post class]]){
-
-        Post *post  = self.posts[indexPath.row];
         
+        Post *post  = self.posts[indexPath.row];
         
         
         PostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"postcell"];
@@ -207,7 +196,6 @@ InfiniteScrollActivityView* loadingMoreView;
         PFUser *user  = self.posts[indexPath.row];
         
         
-        
         HeaderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"headercell"];
         
         cell.user = user;
@@ -217,25 +205,11 @@ InfiniteScrollActivityView* loadingMoreView;
     }
     
     
-        
-        
-
+    
+    
+    
     
 }
-/*
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 600;
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(nonnull NSIndexPath *)indexPath
-{
-    return 600;
-}
-
-
-*/
 
 
 #pragma mark - Navigation
@@ -245,80 +219,70 @@ InfiniteScrollActivityView* loadingMoreView;
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
     
-    
     if([[segue destinationViewController] isKindOfClass:[LoginViewController class]]){
+        // login view controller has no navigation controller
         
         NSLog(@"logging out");
         
-        }
+    }
     
     else{
-    
-    UINavigationController *navigationController = [segue destinationViewController];
-    
-    
-    if([ navigationController.topViewController isKindOfClass:[ComposeViewController class]]){
         
-        ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
-        composeController.postedImage = self.selectedComposeImage;
-        composeController.delegate = self;
-        // becase we are composing from timeline we are not replying to a tweet
-        NSLog(@"Compose Picture Segue");
-    }
-    
-    
-    
-    else if([ navigationController.topViewController isKindOfClass:[DetailViewController class]]){
-        
-        UITableViewCell *tappedCell = sender;
-        NSIndexPath *indexPath = [self.feedView indexPathForCell:tappedCell];
-        Post *post = self.posts[indexPath.row];
+        UINavigationController *navigationController = [segue destinationViewController];
         
         
-        DetailViewController *detailController = (DetailViewController*)navigationController.topViewController;
-        detailController.post = post;
-        detailController.delegate = self;
-        
- 
-
-        // becase we are composing from timeline we are not replying to a tweet
-        NSLog(@"Detail Picture Segue");
-    }
-        
-    else if([ navigationController.topViewController isKindOfClass:[CommentViewController class]]){
+        if([ navigationController.topViewController isKindOfClass:[ComposeViewController class]]){
+            
+            ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+            composeController.postedImage = self.selectedComposeImage;
+            composeController.delegate = self;
+            NSLog(@"Compose Picture Segue");
+        }
         
         
-        CommentViewController *commentController = (CommentViewController*)navigationController.topViewController;
-        commentController.post = self.commentedPost;
-        commentController.delegate = self;
+        else if([ navigationController.topViewController isKindOfClass:[DetailViewController class]]){
+            
+            UITableViewCell *tappedCell = sender;
+            NSIndexPath *indexPath = [self.feedView indexPathForCell:tappedCell];
+            Post *post = self.posts[indexPath.row];
+            
+            
+            DetailViewController *detailController = (DetailViewController*)navigationController.topViewController;
+            detailController.post = post;
+            detailController.delegate = self;
+            
+            NSLog(@"Detail Picture Segue");
+        }
+        
+        else if([ navigationController.topViewController isKindOfClass:[CommentViewController class]]){
+            
+            
+            CommentViewController *commentController = (CommentViewController*)navigationController.topViewController;
+            commentController.post = self.commentedPost;
+            commentController.delegate = self;
+            
+            NSLog(@"Comment View Segue");
+            
+            
+        }
+        
+        
+        else if([ navigationController.topViewController isKindOfClass:[GridViewController class]]){
+            
+            UITableViewCell *tappedCell = sender;
+            NSIndexPath *indexPath = [self.feedView indexPathForCell:tappedCell];
+            PFUser *user = self.posts[indexPath.row];
+            
+            GridViewController *gridController = (GridViewController*)navigationController.topViewController;
+            gridController.user = user;
+            gridController.didTap = true;
+            gridController.delegate = self;
+            
+            NSLog(@"Profile View Segue");
+        }
         
         
         
-        
-     
-    }
-        
-    
-    else if([ navigationController.topViewController isKindOfClass:[GridViewController class]]){
-        
-           GridViewController *gridController = (GridViewController*)navigationController.topViewController;
-        
-
-        UITableViewCell *tappedCell = sender;
-        NSIndexPath *indexPath = [self.feedView indexPathForCell:tappedCell];
-        PFUser *user = self.posts[indexPath.row];
-
-        gridController.user = user;
-        gridController.didTap = true;
-        gridController.delegate = self;
-       
-        
-        // becase we are composing from timeline we are not replying to a tweet
-        NSLog(@"Detail Picture Segue");
-    }
-    
-    
-    
     }
 }
 
@@ -328,9 +292,8 @@ InfiniteScrollActivityView* loadingMoreView;
     [query orderByDescending:@"createdAt"];
     [query includeKey:@"author"];
     [query includeKey:@"objectId"];
-
-
-    query.limit = 5;
+    
+    query.limit = 10;
     
     // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
@@ -340,7 +303,8 @@ InfiniteScrollActivityView* loadingMoreView;
                 
                 Post *post = posts[i];
                 [postsAndNames addObject:post.author];
-
+                // header cell goes before post
+                
                 [postsAndNames addObject:post];
                 
                 
@@ -356,10 +320,8 @@ InfiniteScrollActivityView* loadingMoreView;
 - (void)getMoreData {
     
     
-    // Get timeline
-    
     Post *lastPost   = [self.posts objectAtIndex:self.posts.count-1];
-    // get most oldest tweet, i.e. end of timeline
+    // get most oldest post currently shown
     
     PFQuery *query = [PFQuery queryWithClassName:@"Post"];
     [query orderByDescending:@"createdAt"];
@@ -372,35 +334,29 @@ InfiniteScrollActivityView* loadingMoreView;
     [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
         if (posts) {
             
-
             self.isMoreDataLoading = NO;
             // to prevent calling function more than once
             NSMutableArray *newPaths = [NSMutableArray array];
+            // create array of new index paths to be created
             for(Post *p in posts){
                 [self.posts addObject:p.author];
                 NSIndexPath *newPath = [NSIndexPath indexPathForRow:self.posts.count-1 inSection:0];
                 [newPaths addObject:newPath];
                 
-
+                
                 [self.posts addObject:p];
                 newPath = [NSIndexPath indexPathForRow:self.posts.count-1 inSection:0];
                 [newPaths addObject:newPath];
                 
-
+                
                 
             }
             
             [self.feedView insertRowsAtIndexPaths:newPaths withRowAnimation:UITableViewRowAnimationNone];
+            // add noew posts at bottom of table
             
             [loadingMoreView stopAnimating];
-            
-
-            
-            
-            
-            
-    
-            
+   
             
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
@@ -426,7 +382,6 @@ InfiniteScrollActivityView* loadingMoreView;
             
             [self getMoreData];
             
-            // ... Code to load more results ...
         }
     }
 }
@@ -435,37 +390,30 @@ InfiniteScrollActivityView* loadingMoreView;
     
     [self getFeed];
     [refreshControl endRefreshing];
-
-
-    
 }
 
 -(void)didShare{
     
-    
     [self getFeed];
     
-    [self.feedView reloadData];
     [self.feedDelegate didUpdateFeed];
-
-
+    // tells profile tab to update feed too
     
     
 }
 - (void)didLoad{
     
     [self.feedView reloadData];
+    // when cell gets image, reload the table
 }
 
 - (void)didChangeProfile{
     
     [self getFeed];
-    
-    [self.feedView reloadData];
-    
-    
+    // update profile pics o nfeed
     
     [self.delegate didChangeProfile];
+    // update profile pic on profile tab if user updated pic by clicking on a post
     
     
 }
@@ -473,24 +421,21 @@ InfiniteScrollActivityView* loadingMoreView;
 - (void)didClickCommentOfPost:(Post *)post {
     
     self.commentedPost = post;
+    // get post from cell to pass to comment view segue
 }
 
 - (void)didLike{
     
     [self getFeed];
+    // update feed when user likes on detail view
     
-    
-    
-    
-
 }
 
 - (void)didComment{
     
     [self getFeed];
     
-    [self.feedView reloadData];
-    
+    // updates number of comments on feed
     
 }
 

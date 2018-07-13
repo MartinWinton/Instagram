@@ -17,7 +17,7 @@
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
 @property (nonatomic) UIImage *takenPhoto;
 @end
-
+// NOT USED
 @implementation CameraViewController
 
 - (IBAction)didTakePhoto:(id)sender {

@@ -21,31 +21,29 @@
 @implementation ComposeViewController
 - (IBAction)didClickCancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
-
+    
 }
 - (IBAction)didClickShare:(id)sender {
     
     [SVProgressHUD show];
     [SVProgressHUD setBorderColor: [UIColor blueColor]];
     [SVProgressHUD showWithStatus:@"Posting to the gram.."];
-        [Post postUserImage:self.postedImage withCaption:self.captionField.text WithLocation:self.composeLocation.text withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+    [Post postUserImage:self.postedImage withCaption:self.captionField.text WithLocation:self.composeLocation.text withCompletion:^(BOOL succeeded, NSError * _Nullable error) {
+        
+        if(succeeded){
+            NSLog(@"Successfully posted picture with the follwoing caption: %@", self.captionField.text);
+            [self dismissViewControllerAnimated:YES completion:nil];
+            [self.delegate didShare];
+            [SVProgressHUD dismiss];
             
-            if(succeeded){
-                
-                NSLog(@"Successfully posted picture with the follwoing caption: %@", self.captionField.text);
-                [self dismissViewControllerAnimated:YES completion:nil];
-                [self.delegate didShare];
-                [SVProgressHUD dismiss];
-
-                
-            }
-            
-            else{
-                NSLog(@"Error posting post: %@", error.localizedDescription);
-            }
-            
-        }];
-
+        }
+        
+        else{
+            NSLog(@"Error posting post: %@", error.localizedDescription);
+        }
+        
+    }];
+    
     
 }
 
@@ -63,13 +61,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

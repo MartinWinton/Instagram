@@ -16,6 +16,6 @@
 @property (nonatomic, strong) NSString * _Nullable postID;
 
 + (nonnull NSString *) parseClassName;
-+ (void) postComment:( NSString * _Nullable )text ToPost: (Post *)post withCompletion: (PFBooleanResultBlock  _Nullable)completion;
++ (void) postComment:( NSString * _Nonnull )text ToPost: (Post * _Nonnull)post withCompletion: (PFBooleanResultBlock  _Nullable)completion;
 
 @end

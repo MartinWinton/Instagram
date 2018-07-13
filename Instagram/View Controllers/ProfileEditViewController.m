@@ -60,12 +60,9 @@
     self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2;
     self.profileImageView.clipsToBounds = YES;
 
-    
-    
     NSURL *imageURL = [NSURL URLWithString:image.url];
     
     [self.profileImageView setImageWithURL:imageURL];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
