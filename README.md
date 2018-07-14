@@ -81,11 +81,11 @@ Here's a walkthrough of implemented user stories:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='Gifs/SingingInAndCommentingPosting.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='Gifs/SigingInAndCommentingPosting.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 Here's a walkthrough of signing up as a new user and editing profile:
 
-<img src='Gifs/SingingInAndCommenting.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='Gifs/SigningInAndCommenting.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 
 
