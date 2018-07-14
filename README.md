@@ -79,7 +79,7 @@ Here's a walkthrough of Editing a Profile and Clicking on Posts on the Profile V
 
 <img src='Gifs/InstagramProfileView.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-Here's a walkthrough of signing up as a new user and editing profile:
+Here's a walkthrough of signing up as a new user and editing profile, along with composing posts/comments:
 
 <img src='Gifs/SigningInAndCommentingPosting.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
