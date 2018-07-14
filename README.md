@@ -68,7 +68,29 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='Gifs/InstagramComposeAndComments.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+Here's a walkthrough of implemented user stories:
+
+<img src='Gifs/InstagramDetailView.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+Here's a walkthrough of implemented user stories:
+
+<img src='Gifs/InstagramLoggingIn.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+Here's a walkthrough of implemented user stories:
+
+<img src='Gifs/InstagramLoginRefresh.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+Here's a walkthrough of implemented user stories:
+
+<img src='Gifs/InstagramProfileView.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+Here's a walkthrough of implemented user stories:
+
+<img src='Gifs/SingingInAndCommentingPosting.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

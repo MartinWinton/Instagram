@@ -328,7 +328,7 @@ InfiniteScrollActivityView* loadingMoreView;
     [query whereKey:@"createdAt" lessThan:lastPost.createdAt];
     [query includeKey:@"author"];
     
-    query.limit = 4;
+    query.limit = 1;
     
     // fetch data asynchronously
     [query findObjectsInBackgroundWithBlock:^(NSArray *posts, NSError *error) {
@@ -423,6 +423,7 @@ InfiniteScrollActivityView* loadingMoreView;
                                  animated:YES];
     
     [self.feedDelegate didUpdateFeed];
+    
     // tells profile tab to update feed too
     
     

@@ -178,7 +178,7 @@
         self.numPostsLabel.text = self.user[@"numPosts"];
         
     }
-    
+
     self.usernameLabel.text = self.user[@"Name"];
     self.descriptionLabel.text = self.user[@"Biography"];
     
@@ -324,8 +324,8 @@
 }
 
 - (void)didUpdateFeed{
-    
     [self getFeed];
+    [self refreshData];
 }
 
 
