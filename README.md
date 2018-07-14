@@ -66,11 +66,11 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 ## Video Walkthrough
 
-Here's a walkthrough of Logging in, infinite refresh, pull to refresh, and likes.
+Here's a walkthrough of Logging in, infinite refresh, pull to refresh, and likes:
 
 <img src='Gifs/InstagramStart.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-Here's a walkthrough accessing the detail view both by clicking on a feed post and by clicking on a post on a user's profile.
+Here's a walkthrough accessing the detail view both by clicking on a feed post and by clicking on a post on a user's profile:
 
 <img src='Gifs/InstagramDetailView.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
