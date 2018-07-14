@@ -66,9 +66,9 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories:
+Here's a walkthrough of Logging in, infinite refresh, and pull to refresh.
 
-<img src='Gifs/InstagramComposeAndComments.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='Gifs/InstagramLoginRefresh.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 Here's a walkthrough of implemented user stories:
 
@@ -78,9 +78,7 @@ Here's a walkthrough of implemented user stories:
 
 <img src='Gifs/InstagramLoggingIn.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-Here's a walkthrough of implemented user stories:
 
-<img src='Gifs/InstagramLoginRefresh.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 Here's a walkthrough of implemented user stories:
 
