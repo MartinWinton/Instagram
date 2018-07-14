@@ -66,9 +66,9 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 ## Video Walkthrough
 
-Here's a walkthrough of Logging in, infinite refresh, and pull to refresh.
+Here's a walkthrough of Logging in, infinite refresh, pull to refresh, and likes.
 
-<img src='Gifs/InstagramLoginRefresh.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='Gifs/InstagramStart.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 Here's a walkthrough accessing the detail view both by clicking on a feed post and by clicking on a post on a user's profile.
 
@@ -79,13 +79,9 @@ Here's a walkthrough of implemented user stories:
 
 <img src='Gifs/InstagramProfileView.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-Here's a walkthrough of implemented user stories:
-
-<img src='Gifs/SigningInAndCommentingPosting.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-
 Here's a walkthrough of signing up as a new user and editing profile:
 
-<img src='Gifs/SigningInAndCommenting.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='Gifs/SigningInAndCommentingPosting.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 
 
