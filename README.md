@@ -70,14 +70,9 @@ Here's a walkthrough of Logging in, infinite refresh, and pull to refresh.
 
 <img src='Gifs/InstagramLoginRefresh.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
-Here's a walkthrough of implemented user stories:
+Here's a walkthrough accessing the detail view both by clicking on a feed post and by clicking on a post on a user's profile.
 
 <img src='Gifs/InstagramDetailView.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-
-Here's a walkthrough of implemented user stories:
-
-<img src='Gifs/InstagramLoggingIn.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-
 
 
 Here's a walkthrough of implemented user stories:
@@ -87,6 +82,11 @@ Here's a walkthrough of implemented user stories:
 Here's a walkthrough of implemented user stories:
 
 <img src='Gifs/SingingInAndCommentingPosting.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+Here's a walkthrough of signing up as a new user and editing profile:
+
+<img src='Gifs/SingingInAndCommenting.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
 
 
 
