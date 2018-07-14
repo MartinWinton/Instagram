@@ -61,8 +61,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Ways to store Likes/Comments
+2. Use of delegates to update info among pages
 
 ## Video Walkthrough
 
@@ -75,7 +75,7 @@ Here's a walkthrough accessing the detail view both by clicking on a feed post a
 <img src='Gifs/InstagramDetailView.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 
-Here's a walkthrough of implemented user stories:
+Here's a walkthrough of Editing a Profile and Clicking on Posts on the Profile View:
 
 <img src='Gifs/InstagramProfileView.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
@@ -93,6 +93,8 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 List an 3rd party libraries, icons, graphics, or other assets you used in your app.
 
 - [AFNetworking](https://github.com/AFNetworking/AFNetworking) - networking task library
+- [DateTools](https://github.com/MatthewYork/DateTools) - date tool library
+- [Parse API](https://docs.parseplatform.org/ios/guide/#signing-up) - Parse API
 
 
 
